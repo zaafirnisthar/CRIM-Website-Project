@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIM Grant Application Form - Section B</title>
+    <!-- Tailwind CSS CDN for a modern, mobile-first design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the form to ensure a clean, professional look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .form-section {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .form-section-title {
+            color: #1f2937; /* Dark gray */
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 sm:p-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden p-6 sm:p-10">
+
+        <!-- B. PROJECT LEADER DETAILS -->
+        <section class="form-section">
+            <h2 class="form-section-title">B. PROJECT LEADER DETAILS</h2>
+            <!-- Changed the layout to a single column with vertical spacing -->
+            <div class="space-y-6">
+                <!-- 1. Name -->
+                <div>
+                    <label for="leaderName" class="block text-gray-700 font-medium mb-2">1. Name:</label>
+                    <input type="text" id="leaderName" name="leaderName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 2. Mykad/Passport No -->
+                <div>
+                    <label for="passportNo" class="block text-gray-700 font-medium mb-2">2. Mykad/Passport No:</label>
+                    <input type="text" id="passportNo" name="passportNo" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 3. Staff ID -->
+                <div>
+                    <label for="staffId" class="block text-gray-700 font-medium mb-2">3. Staff ID:</label>
+                    <input type="text" id="staffId" name="staffId" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 4. Position -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">4. Position:</label>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <label class="flex items-center space-x-2"><input type="radio" name="position" value="professor" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Professor</span></label>
+                        <!-- Added the missing 'Associate Professor' option -->
+                        <label class="flex items-center space-x-2"><input type="radio" name="position" value="associate_professor" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Associate Professor</span></label>
+                        <label class="flex items-center space-x-2"><input type="radio" name="position" value="senior_lecturer" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Senior Lecturer</span></label>
+                        <label class="flex items-center space-x-2"><input type="radio" name="position" value="lecturer" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Lecturer</span></label>
+                        <label class="flex items-center space-x-2"><input type="radio" name="position" value="others" id="othersRadio" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Others</span></label>
+                        <input type="text" id="otherPosition" name="otherPosition" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Please state" disabled>
+                    </div>
+                </div>
+                <!-- 5. School/Centre -->
+                <div>
+                    <label for="schoolCentre" class="block text-gray-700 font-medium mb-2">5. School/Centre:</label>
+                    <input type="text" id="schoolCentre" name="schoolCentre" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 6. Office Phone No -->
+                <div>
+                    <label for="officePhone" class="block text-gray-700 font-medium mb-2">6. Office Phone No:</label>
+                    <input type="tel" id="officePhone" name="officePhone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 7. Mobile Phone No -->
+                <div>
+                    <label for="mobilePhone" class="block text-gray-700 font-medium mb-2">7. Mobile Phone No:</label>
+                    <input type="tel" id="mobilePhone" name="mobilePhone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 8. E-mail Address -->
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-2">8. E-mail Address:</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <!-- 9. Academic Qualification -->
+                <div>
+                    <label for="academicQual" class="block text-gray-700 font-medium mb-2">9. Academic Qualification / Highest Professional Qualification:</label>
+                    <textarea id="academicQual" name="academicQual" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                <!-- 10. Employment -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">10. Employment:</label>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <label class="flex items-center space-x-2"><input type="radio" name="employment" value="permanent" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Permanent</span></label>
+                        <label class="flex items-center space-x-2"><input type="radio" name="employment" value="contract" id="contractRadio" class="form-radio text-blue-600 rounded-full"><span class="text-gray-700">Contract</span></label>
+                        <div id="contractExpiryContainer" class="hidden flex items-center space-x-2">
+                            <label for="contractExpiry" class="text-gray-700 whitespace-nowrap">Contract expiry date:</label>
+                            <input type="date" id="contractExpiry" name="contractExpiry" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+                <!-- 11. Date of Appointment -->
+                <div>
+                    <label for="appointmentDate" class="block text-gray-700 font-medium mb-2">11. Date of Appointment to Academic Position:</label>
+                    <input type="date" id="appointmentDate" name="appointmentDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript for dynamic field visibility -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logic for the 'Others' input field under Position
+            const othersRadio = document.getElementById('othersRadio');
+            const otherPositionInput = document.getElementById('otherPosition');
+            document.querySelectorAll('input[name="position"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    otherPositionInput.disabled = !othersRadio.checked;
+                    if (othersRadio.checked) otherPositionInput.focus();
+                    else otherPositionInput.value = '';
+                });
+            });
+
+            // Logic for the 'Contract expiry date' field under Employment
+            const contractRadio = document.getElementById('contractRadio');
+            const contractExpiryContainer = document.getElementById('contractExpiryContainer');
+            const contractExpiryInput = document.getElementById('contractExpiry');
+            document.querySelectorAll('input[name="employment"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (contractRadio.checked) {
+                        contractExpiryContainer.classList.remove('hidden');
+                        contractExpiryInput.setAttribute('required', 'true');
+                    } else {
+                        contractExpiryContainer.classList.add('hidden');
+                        contractExpiryInput.removeAttribute('required');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

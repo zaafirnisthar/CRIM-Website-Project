@@ -1,0 +1,182 @@
+http://localhost/crim_website/auth/login.php
+
+http://localhost/crim_website/public/index.php
+
+
+INSERT INTO users (name, email, password, role) VALUES
+('Admin User', 'admin@crim.com', '$2y$10$ziCmG3.EvW0AIlcYX8h21OycbipQ1E2LLEk3D6aOr5i4OZk0G9Wra', 'admin');
+
+
+
+
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .login-container {
+            width: 430px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-container label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: bold;
+            color: #333;
+
+        }
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+            width: 94%;
+            padding: 10px;
+            margin-bottom: 17px;
+            border-radius: 9px;
+            border: 2px solid #ccc;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 16px;
+
+        }
+        .login-container button:hover {
+            background-color: #218838;
+
+        
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+
+        }
+     </style>
+
+
+     i want to create a homepage now for my website. so make a homepage with the following informations :
+
+     
+
+
+
+
+     body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container, .dashboard-container {
+    max-width: 400px;
+    margin: 60px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    color: #555;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    background: #0077cc;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #005fa3;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+nav a {
+    background: #0077cc;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-align: center;
+}
+
+nav a:hover {
+    background: #005fa3;
+}
+
+.logout {
+    background: #cc0000 !important;
+}
+
+.logout:hover {
+    background: #990000 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php echo htmlspecialchars($placeholder); ?>

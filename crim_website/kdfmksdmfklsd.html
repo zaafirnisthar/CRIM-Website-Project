@@ -1,0 +1,659 @@
+
+
+
+
+
+
+
+
+
+<?php
+// public/index.php
+// Fully standalone homepage (single file) — expects an images folder at ../images
+
+// --- PHP: discover images in ../images ---
+$imagesDir = __DIR__ . '/../images';
+$allFiles = [];
+if (is_dir($imagesDir)) {
+    // search common image extensions
+    $allFiles = glob($imagesDir . '/*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);
+    // stabilize order (nice to sort by name)
+    sort($allFiles, SORT_NATURAL | SORT_FLAG_CASE);
+}
+$hlImages = [];   // highlights (posters)
+$ptnImages = [];  // partners
+$bookImages = []; // publication previews
+$asbjImage = null;
+$accountImage = null;
+foreach ($allFiles as $f) {
+    $bn = basename($f);
+    $ln = strtolower($bn);
+    if (strpos($ln, 'hl') !== false || strpos($ln, 'poster') !== false) {
+        $hlImages[] = $f;
+    } elseif (strpos($ln, 'ptn') !== false || strpos($ln, 'partner') !== false) {
+        $ptnImages[] = $f;
+    } elseif (strpos($ln, 'book') !== false || strpos($ln, 'bk') !== false) {
+        $bookImages[] = $f;
+    } elseif (strpos($ln, 'asbj') !== false || strpos($ln, 'journal') !== false) {
+        $asbjImage = $f;
+    } elseif (strpos($ln, 'account') !== false || strpos($ln, 'avatar') !== false) {
+        $accountImage = $f;
+    }
+}
+// Provide basic fallbacks (so page still looks good even if folder empty)
+$placeholder = '../images/placeholder.png'; // optional: you may add a placeholder.png in images
+if (empty($hlImages)) {
+    // fallback: show any 6 images if available
+    $hlImages = array_slice($allFiles, 0, 6);
+}
+if (empty($ptnImages)) {
+    $ptnImages = array_slice($allFiles, 0, 5);
+}
+if (empty($bookImages)) {
+    $bookImages = array_slice($allFiles, 0, 4);
+}
+if (!$asbjImage && !empty($allFiles)) $asbjImage = $allFiles[0];
+if (!$accountImage) $accountImage = null; // will use SVG fallback
+
+// helper to generate web url for image (URL-encode filename)
+function imgUrl($path) {
+    if (!$path) return '';
+    $bn = basename($path);
+    return '../images/' . rawurlencode($bn);
+}
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CRIM — Centre for Research & Innovation</title>
+  <meta name="description" content="CRIM — research, innovation, publications, and funding opportunities" />
+  <style>
+  /* ---------------------------
+     THEME / RESET
+     --------------------------- */
+  :root{
+    --bg-900:#050607;
+    --bg-800:#0a0b0d;
+    --gold:#d4af37;
+    --gold-soft:#f6e3a8;
+    --muted:#9aa2a6;
+    --text:#f6f7f8;
+    --glass: rgba(255,255,255,0.03);
+    --card-shadow: 0 20px 60px rgba(2,6,12,0.6);
+    --radius:14px;
+    --maxw:1200px;
+    --accent-grad: linear-gradient(90deg,#2dd4bf,#06b6d4);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(212,175,55,0.03), transparent 6%),
+      linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 65%);
+    color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  a{color:inherit}
+  img{display:block;max-width:100%}
+
+  /* helper container */
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:18px; }
+
+  /* ---------------------------
+     NAVBAR
+     --------------------------- */
+  .topbar{
+    position:sticky; top:12px; z-index:1400; margin:12px; padding:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px; box-shadow: 0 6px 24px rgba(0,0,0,0.45); backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .navwrap{ max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:4px 12px; }
+  .brand-title{ font-weight:700; color:var(--gold); letter-spacing:0.4px; font-size:16px; }
+  .nav-center{ display:flex; gap:18px; align-items:center; }
+  .nav-center a{ color:var(--gold-soft); text-decoration:none; font-weight:600; padding:8px 12px; border-radius:10px; transition:all .16s ease; }
+  .nav-center a:hover{ color:var(--gold); transform:translateY(-3px); background:rgba(255,255,255,0.01); }
+
+  .nav-right{ display:flex; gap:12px; align-items:center; }
+  .account img{ width:42px; height:42px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.03); }
+  .hamburger{ display:none; background:transparent; border:0; padding:8px; cursor:pointer; }
+
+  /* ---------------------------
+     HERO — totally new design & style
+     --------------------------- */
+  .hero-creative{
+    max-width:var(--maxw);
+    margin:28px auto;
+    padding:36px 18px;
+    display:grid; grid-template-columns: 1fr 380px; gap:26px; align-items:start;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    border-radius:16px; border:1px solid rgba(255,255,255,0.03); box-shadow:var(--card-shadow);
+  }
+
+  /* left hero: typographic / bold */
+  .hero-left {
+    padding:18px 6px;
+  }
+  .hero-kicker { color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:12px; margin-bottom:8px; }
+  .hero-headline {
+    font-size:46px; line-height:1; font-weight:900;
+    background: linear-gradient(90deg,#ffffff,#e6e6e6);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    margin-bottom:14px;
+  }
+  .hero-sub {
+    color:var(--muted); font-size:16px; margin-bottom:20px; max-width:70%;
+  }
+  .hero-cta-group{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
+  .btn-primary {
+    padding:12px 18px; border-radius:12px; background:var(--accent-grad); color:#021018; font-weight:800; text-decoration:none; box-shadow:0 18px 40px rgba(3,105,161,0.08);
+    transition: transform .18s ease;
+  }
+  .btn-primary:hover{ transform: translateY(-4px); }
+
+  .btn-ghost {
+    background:transparent; border:1px solid rgba(255,255,255,0.03); color:var(--gold-soft); padding:10px 14px; border-radius:12px; font-weight:700;
+  }
+
+  /* right hero: stacked info cards */
+  .hero-right {
+    display:flex; flex-direction:column; gap:12px; padding:10px;
+  }
+  .info-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px; padding:12px; border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  }
+  .info-card h4{ margin:0 0 6px 0; color:var(--gold); font-size:16px; }
+  .info-card p{ margin:0; color:var(--muted); font-size:13px; }
+
+  /* small event list */
+  .event-list{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+  .event-item{ display:flex; gap:10px; align-items:flex-start; }
+  .event-item .when{ color:var(--gold); font-weight:800; font-size:13px; min-width:68px; }
+
+  /* ---------------------------
+     HIGHLIGHTS & EVENTS (poster strip) — new modern alternative to 3D
+     --------------------------- */
+  .highlights-wrap{ padding:34px 18px 10px; max-width:var(--maxw); margin:4px auto 0; }
+  .highlights-wrap h2{ color:var(--gold); margin-bottom:12px; font-size:20px; text-align:center; }
+  .high-carousel {
+    position:relative;
+    display:flex;
+    gap:16px;
+    overflow-x:auto;
+    padding:12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .high-card {
+    flex: 0 0 320px;
+    height:420px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:8px;
+    scroll-snap-align:center;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    position:relative;
+    cursor:pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .high-card:hover{ transform: translateY(-8px); box-shadow: 0 36px 80px rgba(0,0,0,0.68); }
+  .high-card img{ width:100%; height:100%; object-fit:cover; border-radius:8px; display:block; }
+  .high-overlay {
+    position:absolute; left:12px; right:12px; bottom:12px; padding:10px; border-radius:8px; backdrop-filter: blur(4px);
+    background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.45));
+    color:#fff;
+  }
+  .high-title{ font-weight:800; font-size:15px; margin-bottom:6px; }
+  .high-sub{ font-size:13px; color:rgba(255,255,255,0.9); }
+
+  /* nav arrows */
+  .high-controls { display:flex; gap:10px; justify-content:center; margin-top:8px; }
+  .high-controls button { background:rgba(255,255,255,0.03); color:var(--gold); border-radius:10px; padding:8px 10px; border:1px solid rgba(255,255,255,0.03); cursor:pointer; }
+
+  /* lightbox */
+  .lightbox {
+    position:fixed; left:0; top:0; right:0; bottom:0; display:none; align-items:center; justify-content:center; z-index:2200;
+    background:linear-gradient(rgba(1,1,1,0.88), rgba(0,0,0,0.95)); padding:20px;
+  }
+  .lightbox .inner{ max-width:1100px; width:95%; }
+  .lightbox img{ width:100%; height:auto; border-radius:10px; box-shadow:0 40px 120px rgba(0,0,0,0.9); }
+  .light-meta{ margin-top:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+
+  /* ---------------------------
+     BOOK PREVIEW + FUNDING (kept modern)
+     --------------------------- */
+  .books-wrap{ padding:34px 18px 10px; max-width:var(--maxw); margin:18px auto 0; }
+  .books-wrap h2{ color:var(--gold); margin-bottom:18px; font-size:20px; text-align:center; }
+  .books-grid { display:grid; grid-template-columns: 1fr 360px; gap:24px; align-items:start; }
+
+  .book-list { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; }
+  .book-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); transition: transform .26s ease, box-shadow .26s ease; display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .book-card img{ width:100%; height:220px; object-fit:cover; border-radius:8px; box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+  .book-card h4{ margin:10px 0 4px; color:var(--gold); font-size:15px; }
+  .book-card:hover{ transform: translateY(-8px); box-shadow: 0 30px 70px rgba(0,0,0,0.6); }
+
+  .read-more-wrap { margin-top:16px; text-align:center; grid-column: 1 / -1; }
+  .read-more { display:inline-block; padding:12px 22px; border-radius:12px; background:linear-gradient(90deg,var(--gold),#f6e8a0); color:#0b0b0b; font-weight:800; text-decoration:none; box-shadow:0 12px 30px rgba(212,175,55,0.12); transition: transform .18s; }
+  .read-more:hover{ transform: translateY(-4px); }
+
+  .funding-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:var(--card-shadow); display:flex; flex-direction:column; gap:12px; justify-content:center; align-items:flex-start; }
+  .funding-card h3{ color:var(--gold); margin:0; font-size:18px; }
+  .funding-card p{ color:var(--muted); margin:0; line-height:1.5; }
+  .fund-btn { margin-top:8px; padding:10px 14px; background:var(--gold); color:#111; border-radius:10px; font-weight:800; text-decoration:none; }
+
+  /* partners + journal + footer */
+  .partners-wrap{ padding:28px 8px; background:transparent; border-top:1px solid rgba(255,255,255,0.02); border-bottom:1px solid rgba(255,255,255,0.02); }
+  .partners-inner{ max-width:var(--maxw); margin:auto; overflow:hidden; }
+  .partner-track{ display:flex; gap:36px; align-items:center; padding:18px 6px; animation: marquee 20s linear infinite; }
+  .partner-track img{ height:72px; filter:grayscale(100%) brightness(.85); transition: transform .28s ease, filter .28s ease; border-radius:10px; }
+  .partner-track img:hover{ filter:none; transform: scale(1.07); }
+  .partners-wrap:hover .partner-track{ animation-play-state:paused; }
+  @keyframes marquee { 0%{ transform: translateX(0) } 100%{ transform: translateX(-50%) } }
+
+  .journal{ max-width:var(--maxw); margin:32px auto; display:flex; gap:28px; align-items:center; padding:18px; flex-wrap:wrap; }
+  .journal .left{ flex:1; min-width:260px; }
+  .journal h3{ color:var(--gold); margin:0 0 8px; font-size:20px; }
+  .journal p{ color:var(--muted); margin:0; line-height:1.5; }
+
+  footer{ background:#070708; padding:36px 18px 24px; color:var(--muted); margin-top:30px; }
+  .footer-grid{ max-width:var(--maxw); margin:auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; align-items:start; }
+  .footer h4{ color:var(--gold); margin:0 0 8px; }
+  .copy{ text-align:center; margin-top:18px; color:var(--muted); font-size:13px; }
+
+  /* Responsive */
+  @media (max-width:980px){
+    .hero-creative{ grid-template-columns:1fr; }
+    .books-grid { grid-template-columns: 1fr; }
+    .funding-card{ order: 2; }
+    .book-list{ grid-template-columns: repeat(2, 1fr); }
+    .high-card { flex: 0 0 280px; height:360px; }
+  }
+  @media (max-width:640px){
+    .nav-center{ display:none; }
+    .hamburger{ display:block; }
+    .book-list{ grid-template-columns: 1fr; }
+    .book-card img{ height:200px; }
+    .high-card { flex: 0 0 240px; height:300px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="topbar" role="banner">
+  <div class="navwrap wrap" role="navigation" aria-label="Top navigation">
+    <div class="brand-left" style="display:flex;gap:12px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="none"/><path d="M4 12h16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      <div class="brand-title">CRIM — Centre for Research & Innovation</div>
+    </div>
+
+    <!-- center nav -->
+    <nav class="nav-center" role="menubar" aria-label="Main navigation">
+      <div><a href="index.php" role="menuitem">Home</a></div>
+      <div><a href="about.php" role="menuitem">About Us</a></div>
+      <div><a href="research.php" role="menuitem">Research Area</a></div>
+      <div><a href="innovation.php" role="menuitem">Innovation & Impact</a></div>
+      <div class="nav-item" tabindex="0">
+        <a href="publications.php" aria-haspopup="true" role="menuitem">Publication Opportunities ▾</a>
+        <div class="submenu" role="menu" aria-label="Publication submenu" style="display:none; position:absolute; top:46px; left:0">
+          <a href="publications.php" role="menuitem">Research</a>
+          <a href="publications.php" role="menuitem">Publication</a>
+        </div>
+      </div>
+      <div><a href="opportunities.php" role="menuitem">Opportunities</a></div>
+    </nav>
+
+    <!-- right: account + hamburger -->
+    <div class="nav-right">
+      <div class="account" title="Account" tabindex="0" aria-haspopup="true" style="display:flex;align-items:center;gap:8px">
+        <?php if ($accountImage): ?>
+          <img src="<?php echo htmlspecialchars(imgUrl($accountImage)); ?>" alt="Account">
+        <?php else: /* svg fallback */ ?>
+          <div style="width:42px;height:42px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.03)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 13c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" fill="#d4af37"></path></svg></div>
+        <?php endif; ?>
+
+        <div class="account-dropdown" style="display:none; position:absolute; right:18px; top:62px;">
+          <a href="../auth/login.php">Login</a>
+          <a href="../auth/register.php">Register</a>
+        </div>
+      </div>
+
+      <button class="hamburger" id="hambtn" aria-label="Open menu" aria-expanded="false">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- mobile menu -->
+  <div id="mobileMenu" style="display:none; max-width:var(--maxw); margin:12px auto 0; padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03);">
+    <nav aria-label="Mobile navigation">
+      <a href="index.php" style="display:block;padding:10px 6px;font-weight:700">Home</a>
+      <a href="about.php" style="display:block;padding:10px 6px;font-weight:700">About Us</a>
+      <a href="research.php" style="display:block;padding:10px 6px;font-weight:700">Research Area</a>
+      <a href="innovation.php" style="display:block;padding:10px 6px;font-weight:700">Innovation & Impact</a>
+      <a href="publications.php" style="display:block;padding:10px 6px;font-weight:700">Publication Opportunities</a>
+      <a href="opportunities.php" style="display:block;padding:10px 6px;font-weight:700">Opportunities</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO (totally new design & style) -->
+<section class="hero-creative wrap" aria-label="Hero">
+  <div class="hero-left">
+    <div class="hero-kicker">Research & Innovation</div>
+    <div class="hero-headline">Research that moves communities forward</div>
+    <div class="hero-sub">We partner with researchers, industry and communities to transform ideas into inclusive, sustainable solutions. Discover funding, collaborate on publications, and join our innovation programs.</div>
+
+    <div class="hero-cta-group">
+      <a class="btn-primary" href="opportunities.php">Apply for Funding</a>
+      <a class="btn-ghost" href="publications.php">Browse Publications</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="info-card" role="region" aria-label="Latest announcement">
+      <h4>Latest announcement</h4>
+      <p>Grant cycle 3 awarded — Winners announced on 13 June 2025. Visit Opportunities for details and upcoming deadlines.</p>
+    </div>
+
+    <div class="info-card" role="region" aria-label="Upcoming events">
+      <h4>Upcoming events</h4>
+      <div class="event-list">
+        <div class="event-item"><div class="when">Sep 12</div><div><strong>Research Ethics Workshop</strong><div style="color:var(--muted);font-size:13px">Practical guidance for researchers</div></div></div>
+        <div class="event-item"><div class="when">Oct 03</div><div><strong>Innovation Showcase</strong><div style="color:var(--muted);font-size:13px">Student and faculty projects</div></div></div>
+      </div>
+    </div>
+
+    <div class="info-card" role="region" aria-label="Quick search">
+      <h4>Quick search</h4>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:8px">Search publications, events and funding.</p>
+      <form action="publications.php" method="get" style="display:flex; gap:8px;">
+        <input type="search" name="q" placeholder="Search publications..." style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+        <button type="submit" class="btn-primary" style="padding:8px 12px;border-radius:8px">Search</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS & EVENT POSTERS (modern horizontal snap carousel) -->
+<section class="highlights-wrap wrap" aria-label="Highlights and events">
+  <h2>Highlights & Events</h2>
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div class="high-carousel" id="highCarousel" tabindex="0" aria-label="Highlights carousel">
+      <?php
+        if (!empty($hlImages)):
+          foreach ($hlImages as $idx => $h) {
+            $hurl = imgUrl($h);
+            $title = pathinfo($h, PATHINFO_FILENAME);
+            // You asked not to change file names; use them as title fallback
+            $titleText = htmlspecialchars(str_replace(['_','-'], ' ', $title));
+            echo '<div class="high-card" data-src="' . htmlspecialchars($hurl) . '" tabindex="0" role="button" aria-pressed="false">';
+            echo '  <img src="' . htmlspecialchars($hurl) . '" alt="' . $titleText . '">';
+            echo '  <div class="high-overlay"><div class="high-title">' . $titleText . '</div><div class="high-sub">Click to enlarge</div></div>';
+            echo '</div>';
+          }
+        else:
+          // placeholder poster cards
+          for ($i=1;$i<=4;$i++){
+            echo '<div class="high-card" data-src="https://via.placeholder.com/900x1200?text=Poster+' . $i . '">';
+            echo '  <img src="https://via.placeholder.com/900x1200?text=Poster+' . $i . '" alt="Poster ' . $i . '">';
+            echo '  <div class="high-overlay"><div class="high-title">Poster ' . $i . '</div><div class="high-sub">Click to enlarge</div></div>';
+            echo '</div>';
+          }
+        endif;
+      ?>
+    </div>
+
+    <div class="high-controls" style="align-self:center;">
+      <button id="highPrev" aria-label="Scroll left">◀</button>
+      <button id="highNext" aria-label="Scroll right">▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX for highlights -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+  <div class="inner">
+    <img id="lightImage" src="" alt="Expanded poster">
+    <div class="light-meta">
+      <div id="lightTitle" style="color:var(--gold);font-weight:800"></div>
+      <div><button id="lightClose" style="background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer">CLOSE ✕</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOK PREVIEW + FUNDING -->
+<section class="books-wrap wrap" aria-label="Publications preview">
+  <h2>Publications & Research (Preview)</h2>
+
+  <div class="books-grid">
+    <!-- LEFT: 4 book previews (2x2) -->
+    <div>
+      <div class="book-list" aria-live="polite">
+        <?php
+          $booksToShow = array_slice($bookImages, 0, 4);
+          if (empty($booksToShow)) {
+            for ($i=1;$i<=4;$i++){
+              echo '<div class="book-card"><img src="https://via.placeholder.com/420x300?text=Book+'. $i .'" alt="Book '.$i.'"><h4>Book Preview '. $i .'</h4></div>';
+            }
+          } else {
+            foreach ($booksToShow as $b) {
+              $burl = imgUrl($b);
+              $title = pathinfo($b, PATHINFO_FILENAME);
+              echo '<div class="book-card">';
+              echo '<img src="' . htmlspecialchars($burl) . '" alt="' . htmlspecialchars($title) . '">';
+              echo '<h4>' . htmlspecialchars(str_replace(['_','-'], ' ', $title)) . '</h4>';
+              echo '</div>';
+            }
+          }
+        ?>
+      </div>
+
+      <div class="read-more-wrap">
+        <p style="color:var(--muted);margin:8px 0 12px">Explore more publications and research contributions by our faculty and partners.</p>
+        <a href="publications.php" class="read-more">Read More Books →</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Funding card -->
+    <aside class="funding-card" aria-labelledby="fundingTitle">
+      <h3 id="fundingTitle">Funding Opportunities</h3>
+      <p>Apply for research grants and funding to support innovative projects with real-world impact. CRIM provides competitive support for researchers, from seed grants to collaborative projects.</p>
+      <a href="opportunities.php" class="fund-btn">Explore Funding →</a>
+    </aside>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners-wrap" aria-label="Partners">
+  <h2 style="text-align:center; color:var(--gold); margin-bottom:6px">Partners & Collaborators</h2>
+  <div class="partners-inner wrap">
+    <div class="partner-track" id="partnerTrack">
+      <?php
+      // render partners twice to allow seamless loop
+      $partnersToShow = array_slice($ptnImages,0,10);
+      $dup = array_merge($partnersToShow, $partnersToShow);
+      if (empty($dup)) {
+        for ($i=1;$i<=6;$i++){
+          echo '<img src="https://via.placeholder.com/180x80?text=Partner+'. $i .'" alt="partner">';
+        }
+      } else {
+        foreach ($dup as $p) {
+          echo '<img src="' . htmlspecialchars(imgUrl($p)) . '" alt="' . htmlspecialchars(pathinfo($p, PATHINFO_FILENAME)) . '">';
+        }
+      }
+      ?>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal wrap" aria-label="Albukhary Social Business Journal">
+  <div class="left">
+    <h3>Albukhary Social Business Journal</h3>
+    <p>ASBJ showcases research on social business, inclusive innovation and sustainable impact. Read editorials, research articles and practice notes from researchers worldwide.</p>
+    <a class="btn-primary" href="https://asbjournal.com" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px">Read Journal</a>
+  </div>
+  <div class="right" style="width:420px;min-width:260px;border-radius:12px;overflow:hidden;box-shadow:var(--card-shadow);">
+    <?php if ($asbjImage): ?>
+      <img src="<?php echo htmlspecialchars(imgUrl($asbjImage)); ?>" alt="ASBJ journal cover">
+    <?php else: ?>
+      <img src="https://via.placeholder.com/600x360?text=ASBJ+Preview" alt="ASBJ preview">
+    <?php endif; ?>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid wrap">
+    <div>
+      <h4>Contact</h4>
+      <p>Email: <a href="mailto:crim@aiu.edu.my">crim@aiu.edu.my</a><br>Phone: +60 4-774 7300</p>
+      <div class="socials" aria-label="social links" style="display:flex;gap:10px;margin-top:8px;">
+        <a href="#" title="Facebook" aria-label="Facebook" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,0.02);border-radius:10px;color:var(--gold);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 12.073C22 6.477 17.523 2 11.926 2S2 6.477 2 12.073c0 5.064 3.657 9.27 8.438 9.95v-7.04h-2.54v-2.91h2.54V9.845c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.196 2.238.196v2.46h-1.26c-1.244 0-1.63.772-1.63 1.562v1.875h2.773l-.444 2.91h-2.33v7.04C18.343 21.343 22 17.137 22 12.073z" fill="currentColor"/></svg>
+        </a>
+        <a href="#" title="X / Twitter" aria-label="X" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,0.02);border-radius:10px;color:var(--gold);">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M23 3.000c-.8.35-1.66.58-2.56.69.92-.55 1.62-1.43 1.95-2.46-.86.51-1.82.88-2.84 1.08C18.6 1.6 17.4 1 16.1 1c-2.4 0-4.3 2.1-3.8 4.4-3.2-.2-6-1.7-8-4C3.3 2.6 4 5 5.6 6.1c-.7 0-1.4-.2-2.1-.6v.1c0 2.1 1.5 3.9 3.5 4.3-.6.2-1.3.2-1.9.1.5 1.5 1.9 2.6 3.6 2.6-1.4 1.1-3.2 1.8-5.1 1.8H3c1.9 1.3 4.2 2.1 6.7 2.1 8 0 12.4-6.6 12.4-12.3v-.6C21.8 4.7 22.5 3.9 23 3z" fill="currentColor"/></svg>
+        </a>
+        <a href="#" title="Instagram" aria-label="Instagram" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,0.02);border-radius:10px;color:var(--gold);">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6a5 5 0 1 0 .001 10.001A5 5 0 0 0 12 8zm6.5-3.5a1.5 1.5 0 1 0 0 3.001 1.5 1.5 0 0 0 0-3z" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4>Location</h4>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7964.218!2d100.5071!3d6.1228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304b37d8710e5a6d%3A0xc84a3b1a6!2sAlbukhary%20International%20University!5e0!3m2!1sen!2smy!4v1234567890" allowfullscreen="" loading="lazy" style="width:100%;height:150px;border:0;border-radius:10px"></iframe>
+    </div>
+
+    <div>
+      <h4>Useful</h4>
+      <p><a href="forms.php">Grant Forms</a><br><a href="events.php">Events</a><br><a href="publications.php">Publications</a></p>
+    </div>
+  </div>
+
+  <div class="copy">© <?php echo date('Y'); ?> CRIM — Designed by Phyo</div>
+</footer>
+
+<!-- --------------------------
+     Javascript: interactions
+     -------------------------- -->
+<script>
+(function(){
+  // helpers
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+
+  // Mobile menu toggle
+  const hambtn = qs('#hambtn');
+  const mobileMenu = qs('#mobileMenu');
+  if (hambtn) {
+    hambtn.addEventListener('click', () => {
+      const open = mobileMenu.style.display === 'block';
+      mobileMenu.style.display = open ? 'none' : 'block';
+      hambtn.setAttribute('aria-expanded', (!open).toString());
+    });
+  }
+
+  // Submenu accessibility
+  qsa('.nav-item').forEach(item=>{
+    item.addEventListener('focusin', ()=> {
+      const sub = item.querySelector('.submenu');
+      if(sub) sub.style.display = 'block';
+    });
+    item.addEventListener('focusout', ()=> {
+      const sub = item.querySelector('.submenu');
+      if(sub) sub.style.display = 'none';
+    });
+  });
+
+  /* ---------------------------
+     HIGHLIGHT CAROUSEL: scroll-snap + arrow controls + lightbox
+     --------------------------- */
+  const carousel = qs('#highCarousel');
+  const prevBtn = qs('#highPrev');
+  const nextBtn = qs('#highNext');
+  const cardSelector = '.high-card';
+
+  // Scroll amount: try one card width
+  function scrollByCard(direction=1){
+    if(!carousel) return;
+    const card = carousel.querySelector(cardSelector);
+    if(!card) return;
+    const gap = parseInt(getComputedStyle(card).marginRight || 16);
+    const cardW = card.getBoundingClientRect().width + gap;
+    carousel.scrollBy({ left: direction * cardW, behavior: 'smooth' });
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', ()=> scrollByCard(-1));
+  if (nextBtn) nextBtn.addEventListener('click', ()=> scrollByCard(1));
+
+  // enable keyboard left/right when carousel focused
+  if (carousel) {
+    carousel.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollByCard(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); scrollByCard(1); }
+    });
+  }
+
+  // Lightbox
+  const lightbox = qs('#lightbox');
+  const lightImage = qs('#lightImage');
+  const lightTitle = qs('#lightTitle');
+  const lightClose = qs('#lightClose');
+
+  function openLight(src, title) {
+    lightImage.src = src;
+    lightTitle.textContent = title || '';
+    lightbox.style.display = 'flex';
+    lightbox.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLight() {
+    lightbox.style.display = 'none';
+    lightbox.setAttribute('aria-hidden','true');
+    lightImage.src = '';
+    lightTitle.textContent = '';
+    document.body.style.overflow = '';
+  }
+
+  // click handlers: open lightbox when a poster clicked
+  qsa('.high-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const src = card.dataset.src || (card.querySelector('img') ? card.querySelector('img').src : '');
+      const title = card.querySelector('.high-title') ? card.querySelector('.high-title').textContent : '';
+      openLight(src, title);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+  });
+
+  lightClose.addEventListener('click', closeLight);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLight(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLight(); });
+
+  // Partner marquee pause handled via CSS hover
+
+  // small accessibility for read-more: Enter to go
+  const readMore = qs('.read-more');
+  if(readMore){
+    readMore.addEventListener('keyup', (e)=>{
+      if(e.key === 'Enter') window.location = readMore.getAttribute('href');
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>
+

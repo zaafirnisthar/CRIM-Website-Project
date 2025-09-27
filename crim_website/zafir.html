@@ -1,0 +1,22 @@
+<?php
+require_once __DIR__ . '/../config/db.php';
+$announcements = $conn->query("SELECT * FROM announcements ORDER BY created_at DESC LIMIT 5");
+?>
+
+   <!-- Announcements -->
+    <section>
+        <h2 class="text-3xl font-bold mb-6 text-yellow-400 text-center">📢 Announcements</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <?php if ($announcements->num_rows > 0): ?>
+                <?php while ($a = $announcements->fetch_assoc()): ?>
+                    <div class="card rounded-lg shadow p-5">
+                        <h3 class="text-xl font-semibold text-yellow-400 mb-2"><?= htmlspecialchars($a['title']) ?></h3>
+                        <p class="text-sm text-gray-400 mb-2"><?= $a['created_at'] ?></p>
+                        <p class="text-gray-300"><?= htmlspecialchars($a['message']) ?></p>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-gray-400 text-center">No announcements available.</p>
+            <?php endif; ?>
+        </div>
+    </section>

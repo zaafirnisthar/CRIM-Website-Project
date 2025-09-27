@@ -1,0 +1,119 @@
+<?php
+require_once __DIR__ . '/../config/db.php';
+
+$errors = [];
+$values = ['fullname'=>'','email'=>'','username'=>''];
+$success = false;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $fullname = trim($_POST['fullname'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm  = $_POST['confirm'] ?? '';
+    $role     = $_POST['role'] ?? 'user';
+
+    $values['fullname'] = $fullname;
+    $values['email']    = $email;
+    $values['username'] = $username;
+
+    if ($password !== $confirm) {
+        $errors['password'] = "Passwords do not match!";
+    }
+    if ($email === '') {
+        $errors['email'] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = "Invalid email format.";
+    }
+
+    if (!isset($errors['email'])) {
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            $errors['email'] = "Email already registered!";
+        }
+        $stmt->close();
+    }
+
+    if (empty($errors)) {
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $ins = $conn->prepare("INSERT INTO users (fullname, email, username, password, role) VALUES (?, ?, ?, ?, ?)");
+        $ins->bind_param("sssss", $fullname, $email, $username, $hashed, $role);
+        if ($ins->execute()) {
+            $success = "Registration successful! You can now <a href='login.php'>login</a>.";
+            $values = ['fullname'=>'','email'=>'','username'=>''];
+        } else {
+            $errors['general'] = "Database error: " . $ins->error;
+        }
+        $ins->close();
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register - CRIM</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen p-6">
+
+<!-- Smaller Container -->
+<div class="bg-gray-800 rounded-2xl shadow-xl p-10 max-w-md w-full text-center">
+    <h1 class="text-4xl font-bold text-yellow-400 mb-8">CRIM Register</h1>
+
+    <?php if (!empty($errors['general'])): ?>
+        <p class="text-red-500 font-semibold mb-6"><?= htmlspecialchars($errors['general']) ?></p>
+    <?php endif; ?>
+    <?php if ($success): ?>
+        <p class="text-green-400 font-semibold mb-6"><?= $success ?></p>
+    <?php endif; ?>
+
+    <form method="POST" class="space-y-5 text-left">
+        <div>
+            <label class="block text-yellow-400 font-bold text-lg mb-1">Full Name</label>
+            <input type="text" name="fullname" value="<?= htmlspecialchars($values['fullname']) ?>" required
+                class="w-full p-4 rounded-xl bg-gray-700 text-yellow-100 border border-gray-600 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition text-lg" />
+        </div>
+
+        <div>
+            <label class="block text-yellow-400 font-bold text-lg mb-1">Email</label>
+            <input type="email" name="email" value="<?= htmlspecialchars($values['email']) ?>" required
+                class="w-full p-4 rounded-xl bg-gray-700 text-yellow-100 border border-gray-600 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition text-lg" />
+            <p class="text-red-500 mt-1"><?= $errors['email'] ?? '' ?></p>
+        </div>
+
+        <div>
+            <label class="block text-yellow-400 font-bold text-lg mb-1">Username</label>
+            <input type="text" name="username" value="<?= htmlspecialchars($values['username']) ?>" required
+                class="w-full p-4 rounded-xl bg-gray-700 text-yellow-100 border border-gray-600 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition text-lg" />
+        </div>
+
+        <div>
+            <label class="block text-yellow-400 font-bold text-lg mb-1">Password</label>
+            <input type="password" name="password" required
+                class="w-full p-4 rounded-xl bg-gray-700 text-yellow-100 border border-gray-600 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition text-lg" />
+        </div>
+
+        <div>
+            <label class="block text-yellow-400 font-bold text-lg mb-1">Confirm Password</label>
+            <input type="password" name="confirm" required
+                class="w-full p-4 rounded-xl bg-gray-700 text-yellow-100 border border-gray-600 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 transition text-lg" />
+            <p class="text-red-500 mt-1"><?= $errors['password'] ?? '' ?></p>
+        </div>
+
+        <input type="hidden" name="role" value="user" />
+
+        <button type="submit"
+            class="w-full p-4 rounded-xl bg-yellow-400 text-gray-900 font-bold text-lg hover:bg-yellow-500 transition transform hover:scale-105">
+            Register
+        </button>
+    </form>
+
+    <p class="mt-6 text-gray-300 text-center">Already have an account? <a href="login.php" class="text-yellow-400 hover:text-yellow-500">Login</a></p>
+</div>
+
+</body>
+</html>

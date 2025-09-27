@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+
+/* GENERAL BODY */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0d0d0d;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+/* WRAPPER */
+.schools-wrap {
+  max-width: 2000px; /* wider so 4 cards fit neatly */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #0d0d0d;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* GRID – FORCE 4 CARDS PER LINE */
+.schools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 1200px) {
+  .schools-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on smaller screens */
+  }
+}
+
+@media (max-width: 700px) {
+  .schools-grid {
+    grid-template-columns: 1fr; /* 1 per row on mobile */
+  }
+}
+
+/* SCHOOL CARD */
+.school-card {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.school-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.school-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* HEADINGS */
+.school-card h3 {
+  color: #d4af37;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* LISTS */
+.school-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.school-card ul li {
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-size: 1em;
+  color: #ffffff;
+}
+
+/* LINKS */
+.school-card ul li a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.school-card ul li a:hover {
+  text-decoration: underline;
+  color: #d4af37;
+}
+
+/* AUTHORS */
+.authors {
+  font-size: 0.85em;
+  color: #cccccc;
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* READ MORE BUTTON */
+.read-more {
+  display: block;
+  margin-top: auto;
+  padding: 10px 15px;
+  background-color: #d4af37;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-align: center;
+}
+
+.read-more:hover {
+  background-color: #bfa12e;
+  color: #ffffff;
+}
+
+
+    </style>
+</head>
+<body>
+    <section class="schools-wrap" aria-label="School Research Publications" style="padding:60px 20px; background-color:#0d0d0d;">
+  <h2 style="text-align:center; color:#d4af37; font-size:32px; margin-bottom:40px;">Research Publications by Schools</h2>
+
+  <div class="schools-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px;">
+
+    <!-- SCI -->
+    <div class="school-card">
+      <img src="../images/sci.jpg" alt="SCI School">
+      <h3>SCI - Research and Publications</h3>
+      <ul>
+        <li>
+          <a href="https://link.springer.com/chapter/10.1007/978-3-031-91008-1_1#:~:text=An%20algorithm%20incorporating%20the%20supervised,extract%20needed%20attributes%20from%20the," target="_blank">Real-Time Identification for Fake News on social media (Instagram)</a>
+          <div class="authors">Authors: Halawati Abd Jalil Safuan, Khalid Hussain, Raghad Al Yatim & Deepak Kumar</div>
+        </li>
+        <li>
+          <a href="https://www.igi-global.com/book/vulnerabilities-assessment-risk-management-cyber/343054" target="_blank">Vulnerabilities Assessment and Risk Management in Cyber Security</a>
+          <div class="authors">Authors: Khalid Hussain</div>
+        </li>
+        <li>
+          <a href="https://link.springer.com/chapter/10.1007/978-3-031-91005-0_16" target="_blank">Facial Recognition and Detection: Overcoming Pose Variations and Enhancing Accuracy with Machine Learning Implementation</a>
+          <div class="authors">Authors: Mozaherul Hoque Abul Hasanat, Mohamed Fofana, Mohammad Tamim, Basheer Riskhan and Rahul Singh</div>
+        </li>
+      </ul>
+      <a href="#" class="read-more">Read More</a>
+    </div>
+
+    <!-- SBSS -->
+    <div class="school-card">
+      <img src="../images/sbss.jpg" alt="SBSS School">
+      <h3>SBSS - Researchs</h3>
+      <ul>
+        <li>
+          <a href="#" target="_blank">Exploring Multidimensional Child Poverty in Rural Kedah, Kelantan, Perlis and Negeri Sembilan</a>
+          <div class="authors">Authors: Dr. Reazul Islam, AP. Dr. Mustaffa Omar, AP. Dr. Ayesah Uy Abubakar</div>
+        </li>
+        <li>
+          <a href="#" target="_blank">Addressing Food Insecurity Through Aquaponics Farming in Baling</a>
+          <div class="authors">Authors: Prof. Dr. Nor Azilah Husin, Dr Azni Abdul Rashid, Amirul Syafiq Mohd Ghazali</div>
+        </li>
+        <li>
+          <a href="#" target="_blank">Empowering Youths through A Community-Driven Initiative Addressing Zero Unemployment in Rural Communities in Kedah</a>
+          <div class="authors">Authors: Assoc. Prof. Dr. Norizan Azizan, Nur Arfah Abdul Sabian, Amirul Syafiq Bin Mohd Ghazali</div>
+        </li>
+      </ul>
+      <a href="#" class="read-more">Read More</a>
+    </div>
+
+    <!-- SEHS -->
+    <div class="school-card">
+      <img src="../images/sehs.jpg" alt="SEHS School">
+      <h3>SEHS - Researchs</h3>
+      <ul>
+        <li>
+          <a href="#" target="_blank">A Smart Contract Mechanism based on Blockchain in Providing Trustworthy Direct Investment Opportunities</a>
+          <div class="authors">Authors: Associate Professor Dr. Kalthom Husain, Dr. Bahiah A Malek, Dr. Hisham Anand Bharbuiya, Abu Bakar Ngah</div>
+        </li>
+        <li>
+          <a href="#" target="_blank">Bright Futures: Basic English Program for Sekolah Alternatif, Kampung Batu 4, Tawau, Sabah</a>
+          <div class="authors">Authors: Mohamad Norhisyam Musa, Dr. Norazly Nordin (ACE-SEDI Research Fellow)</div>
+        </li>
+        <li>
+          <a href="#" target="_blank">Promoting Values-Based Education: Development and Validation of Instrument to Measure AIU 5As Core Values</a>
+          <div class="authors">Authors: Assoc. Prof. Dr. Bakare Kayode, Prof. Dr. Abdul Malek bin Abdul Karim, Assoc. Prof. Dr. Zahayu Md Yusof, Alia Hanim Zainal Abidin</div>
+        </li>
+      </ul>
+      <a href="#" class="read-more">Read More</a>
+    </div>
+
+    <!-- CFGS -->
+    <div class="school-card">
+      <img src="../images/cfgs.jpg" alt="CFGS School">
+      <h3>CFGS - Researchs</h3>
+      <ul>
+        <li>
+          <a href="#" target="_blank">Community Engagement in Enhancing Additional Mathematics Learning through Technology Among Secondary Students in Sik</a>
+          <div class="authors">Authors: Syaza Lyana Mahadzir, Irdayu Binti Ibrahim, Farah Nadiah Abdul Kudus</div>
+        </li>
+      </ul>
+      <a href="#" class="read-more">Read More</a>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>

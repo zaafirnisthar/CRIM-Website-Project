@@ -1,0 +1,175 @@
+<?php
+// register.php (form, server validation + insert)
+// Make sure connect.php is in the same folder.
+require_once __DIR__ . '/../config/db.php';
+
+// Prepare state
+$errors = [];                 // associative array for field errors
+$values = ['fullname'=>'','email'=>'','username'=>'']; // keep entered values
+$success = false;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // collect inputs safely
+    $fullname = trim($_POST['fullname'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm  = $_POST['confirm'] ?? '';
+
+    // keep values to show back in the form (don't repopulate password fields)
+    $values['fullname'] = $fullname;
+    $values['email']    = $email;
+    $values['username'] = $username;
+
+    // server-side validations
+    if ($password !== $confirm) {
+        $errors['password'] = "Passwords do not match!";
+    }
+
+    if ($email === '') {
+        $errors['email'] = "Email is required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = "Invalid email format.";
+    }
+
+    // check duplicate email only if no earlier email error
+    if (!isset($errors['email'])) {
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
+        if ($stmt) {
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+            if ($stmt->num_rows > 0) {
+                $errors['email'] = "Email already registered!";
+            }
+            $stmt->close();
+        } else {
+            $errors['general'] = "Database error (check SELECT).";
+        }
+    }
+
+    // If no errors, insert user
+    if (empty($errors)) {
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $ins = $conn->prepare("INSERT INTO users (fullname, email, username, password) VALUES (?, ?, ?, ?)");
+        if ($ins) {
+            $ins->bind_param("ssss", $fullname, $email, $username, $hashed);
+            if ($ins->execute()) {
+                $success =  "Registration successful. You can now <a href='login.php'> login </a>.";
+                // clear shown values after success
+                $values = ['fullname'=>'','email'=>'','username'=>''];
+            } else {
+                $errors['general'] = "Database error (insert): " . $ins->error;
+            }
+            $ins->close();
+        } else {
+            $errors['general'] = "Database error (prepare insert).";
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Register</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f2f2f2; padding:40px; }
+
+  .container { background:#fff; padding:20px 30px; max-width:420px; margin:auto; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+
+  h2 { text-align:center; margin:0 0 12px; }
+
+  label { display:block; margin-top:10px; font-weight:600; }
+
+  input[type="text"], input[type="email"], input[type="password"] {
+    width:100%; padding:9px; margin-top:6px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px;
+  }
+
+  input[type="submit"] {
+    margin-top:18px; width:100%; padding:10px; background:#28a745; color:#fff; border:none; border-radius:4px; cursor:pointer;
+    font-size:16px;
+  }
+  
+  input[type="submit"]:hover { background:#218838; }
+  .error { color:#c62828; font-size:14px; margin-top:6px; }
+  .success { color:#155724; background:#d4edda; border:1px solid #c3e6cb; padding:8px 10px; border-radius:4px; margin-bottom:10px; }
+  .general-error { color:#721c24; background:#f8d7da; border:1px solid #f5c6cb; padding:8px 10px; border-radius:4px; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Registration</h2>
+
+  <?php if (!empty($errors['general'])): ?>
+    <div class="general-error" id="generalError"><?= htmlspecialchars($errors['general']) ?></div>
+  <?php endif; ?>
+
+  <?php if ($success): ?>
+    <div class="success" id="successMsg">Registration successful! You can now log in.</div>
+  <?php endif; ?>
+
+  <form id="regForm" method="post" novalidate>
+    <label for="fullname">Full Name</label>
+    <input id="fullname" name="fullname" type="text" required value="<?= htmlspecialchars($values['fullname']) ?>">
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required value="<?= htmlspecialchars($values['email']) ?>">
+    <div class="error" id="emailError"><?= htmlspecialchars($errors['email'] ?? '') ?></div>
+
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" required value="<?= htmlspecialchars($values['username']) ?>">
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required>
+
+    <label for="confirm">Confirm Password</label>
+    <input id="confirm" name="confirm" type="password" required>
+    <div class="error" id="passError"><?= htmlspecialchars($errors['password'] ?? '') ?></div>
+
+    <input type="submit" value="Register">
+  </form>
+</div>
+
+<script>
+  // When user starts typing in a related field, hide the error message immediately
+  document.getElementById('email').addEventListener('input', function() {
+    document.getElementById('emailError').textContent = '';
+    // also hide general and success messages (if any)
+    var g = document.getElementById('generalError'); if (g) g.style.display = 'none';
+    var s = document.getElementById('successMsg'); if (s) s.style.display = 'none';
+  });
+
+  document.getElementById('password').addEventListener('input', function() {
+    document.getElementById('passError').textContent = '';
+    var s = document.getElementById('successMsg'); if (s) s.style.display = 'none';
+  });
+  document.getElementById('confirm').addEventListener('input', function() {
+    document.getElementById('passError').textContent = '';
+    var s = document.getElementById('successMsg'); if (s) s.style.display = 'none';
+  });
+  document.getElementById('fullname').addEventListener('input', function() {
+    var s = document.getElementById('successMsg'); if (s) s.style.display = 'none';
+  });
+  document.getElementById('username').addEventListener('input', function() {
+    var s = document.getElementById('successMsg'); if (s) s.style.display = 'none';
+  });
+
+  // Optional: client-side check on submit for password matching to avoid a full round-trip.
+  document.getElementById('regForm').addEventListener('submit', function(e) {
+    var pass = document.getElementById('password').value;
+    var conf = document.getElementById('confirm').value;
+    if (pass !== conf) {
+      e.preventDefault();
+      document.getElementById('passError').textContent = 'Passwords do not match!';
+      document.getElementById('confirm').focus();
+    }
+    // NOTE: email duplication is checked on the server only (as requested),
+    // so form will post and server will return email error if duplicate exists.
+  });
+</script>
+
+</body>
+</html>

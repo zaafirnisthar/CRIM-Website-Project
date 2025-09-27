@@ -1,0 +1,16 @@
+<?php
+require_once __DIR__ . '/config/db.php';
+$result = $conn->query("SELECT * FROM announcements ORDER BY created_at DESC LIMIT 5");
+?>
+<h2>Announcements</h2>
+<?php while ($a = $result->fetch_assoc()): ?>
+    <div class="announcement">
+        <h3><?= htmlspecialchars($a['title']) ?></h3>
+        <p><?= htmlspecialchars($a['message']) ?></p>
+        <small><?= $a['created_at'] ?></small>
+    </div>
+<?php endwhile; ?>
+
+
+
+

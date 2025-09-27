@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIU Publications Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000; /* Black */
+      color: #fff;      /* White text */
+      margin: 0;
+      padding: 0;
+    }
+
+   
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+      padding: 20px 40px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #0e0c0c; /* Dark grey card */
+      border: 1px solid #FFD700; /* Gold border */
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);
+      font-size: 0.9rem;
+      color: #fff; /* White text */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(255, 215, 0, 0.4);
+    }
+
+    .card .title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #FFD700; /* Gold title */
+    }
+
+    .card .authors,
+    .card .journal,
+    .card .classification,
+    .card .status {
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      color: #ddd; /* Light grey for meta text */
+    }
+
+    .tags {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      background: #FFD700; /* Gold background */
+      color: #000;         /* Black text */
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+
+<?php include __DIR__ . '/../includes/header.php'; ?>
+
+
+  <header>PUBLICATIONS</header>
+  <div class="container">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="title">Reinforcement Learning-Based Voting for Feature Drift-Aware Intrusion Detection</div>
+      <div class="authors"><strong>Authors:</strong> Methaq A. Shyaa, Noor Farizah Ibrahim, Zurinahni Binti Zainol, Rosni Abdullah, Mohammed Anbar</div>
+      <div class="journal"><strong>Journal:</strong> IEEE</div>
+      <div class="classification"><strong>Type:</strong> Article</div>
+      <div class="status">Published</div>
+      <div class="tags">
+        <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+        <span class="tag"><i class="fas fa-trophy"></i> Q1</span>
+        <span class="tag"><i class="fas fa-barcode"></i> 2169-3536</span>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="title">Gamification for Learning and Motivation: A Scoping Review</div>
+      <div class="authors"><strong>Authors:</strong> Nurul Nadia Mohd Sahar, Suraya Masrom, Mohd Faizal Omar</div>
+      <div class="journal"><strong>Journal:</strong> International Journal of Emerging Technologies in Learning (iJET)</div>
+      <div class="classification"><strong>Type:</strong> Article</div>
+      <div class="status">Published</div>
+      <div class="tags">
+        <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+        <span class="tag"><i class="fas fa-trophy"></i> Q2</span>
+        <span class="tag"><i class="fas fa-barcode"></i> 1863-0383</span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="title">The Role of AI in Modern Education</div>
+      <div class="authors"><strong>Authors:</strong> Ahmad Zain, Nur Farhana</div>
+      <div class="journal"><strong>Journal:</strong> AI in Education</div>
+      <div class="classification"><strong>Type:</strong> Conference Paper</div>
+      <div class="status">In Press</div>
+      <div class="tags">
+        <span class="tag"><i class="fas fa-database"></i> - </span>
+        <span class="tag"><i class="fas fa-trophy"></i> - </span>
+        <span class="tag"><i class="fas fa-barcode"></i> - </span>
+      </div>
+    </div>
+      <!-- 4 -->
+        <div class="card">
+          <div class="title">Religious Sentiment Analysis and Detection on Social Media</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Md Shakil Hossain, Farzeen Ashfaq</div>
+          <div class="journal"><strong>Journal:</strong> Computational Intelligence in Pattern Recognition</div>
+          <div class="classification"><strong>Type:</strong> Chapters in Research Book</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="card">
+          <div class="title">Malaysia's Path in Social Entrepreneurship: Through the Lens of Drayton and Yunus</div>
+          <div class="authors"><strong>Authors:</strong> Assoc Prof Dr Suraya Hanim Mokhtar</div>
+          <div class="journal"><strong>Journal:</strong> - </div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Accepted</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div class="card">
+          <div class="title">Impact of Entrepreneurship on Rural Poverty: Quantifying Income Changes via Data Science Analysis</div>
+          <div class="authors"><strong>Authors:</strong> Assoc Prof Dr Suraya Hanim Mokhtar</div>
+          <div class="journal"><strong>Journal:</strong> - </div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Accepted</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 7 -->
+        <div class="card">
+          <div class="title">Sustainability Starts Small: Examining 3R Awareness Among Elementary Students of SK Danglau in a Zero Net Carbon Young Leaders Programme</div>
+          <div class="authors"><strong>Authors:</strong> Aliaa Diyana Zamri</div>
+          <div class="journal"><strong>Journal:</strong> - </div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Accepted</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 8 -->
+        <div class="card">
+          <div class="title">Productivity in Rural Entrepreneurship at Baling, Kedah: The Interplay of Financial Resources, Infrastructure, Market Efficiency, and Social Support</div>
+          <div class="authors"><strong>Authors:</strong> Aliaa Diyana Zamri</div>
+          <div class="journal"><strong>Journal:</strong> - </div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Accepted</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 9 -->
+        <div class="card">
+          <div class="title">Exploring Elementary Teachers’ Pedagogy in Teaching Science for Upper Standard: A Case Study</div>
+          <div class="authors"><strong>Authors:</strong> Siti Aisyah Ghazali, Aini Syahira Jamaluddin</div>
+          <div class="journal"><strong>Journal:</strong> Asian Journal of Research in Education and Social Sciences</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> MyCite</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2682-8502</span>
+          </div>
+        </div>
+        <!-- 10 -->
+        <div class="card">
+          <div class="title">The Effects of Inclusive Education on Regular Elementary Students’ Academic Performance: A Case Study in Bali Indonesia</div>
+          <div class="authors"><strong>Authors:</strong> Salsabila, Aini Syahira Jamaluddin</div>
+          <div class="journal"><strong>Journal:</strong> Asian Journal of Research in Education and Social Sciences</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> MyCite</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2682-8503</span>
+          </div>
+        </div>
+        <!-- 11 -->
+        <div class="card">
+          <div class="title">Investigating Password Vulnerabilities and Protection Strategies</div>
+          <div class="authors"><strong>Authors:</strong> Khalid Hussain, Hassan Mohamednour Osman Haji, Amar Gamaa Mohmmood Farag, Hassan Edris Hassan, Himanshu Kumar</div>
+          <div class="journal"><strong>Journal:</strong> Proceedings of 4th International Conference on Mathematical Modeling and Computational Science</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 12 -->
+        <div class="card">
+          <div class="title">Real-Time Identification for Fake News on Social Media (Instagram)</div>
+          <div class="authors"><strong>Authors:</strong> Halawati Abd Jalil Safuan, Khalid Hussain, Raghad Al Yatim, Deepak Kumar</div>
+          <div class="journal"><strong>Journal:</strong> Proceedings of 4th International Conference on Mathematical Modeling and Computational Science</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3371</span>
+          </div>
+        </div>
+        <!-- 13 -->
+        <div class="card">
+          <div class="title">Indonesia: Comparison Between the Most Consumption of Renewable and Non-Renewable Energy Toward CO2 Emissions</div>
+          <div class="authors"><strong>Authors:</strong> Abdul Hayy Haziq Mohamad, Muhammad Hafiz bin Muhammad Hisham, Salfarina Abdul Gapor</div>
+          <div class="journal"><strong>Journal:</strong> International Journal of Research and Innovation in Social Science (IJRISS)</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> ERA</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2454-6186</span>
+          </div>
+        </div>
+        <!-- 14 -->
+        <div class="card">
+          <div class="title">Impact of Workplace Safety on Business Success: Hazard Identification in Malaysia</div>
+          <div class="authors"><strong>Authors:</strong> Yeasmin Akter, S M Asiful Islam Saky, Jahidul Islam, Farhana Akter, Norizan Azizan</div>
+          <div class="journal"><strong>Journal:</strong> International Journal of Social Science Research and Review</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Non-indexed</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2700-2497</span>
+          </div>
+        </div>
+        <!-- 15 -->
+        <div class="card">
+          <div class="title">Multi-Modal Stacked Ensemble Model for Breast Cancer Prognosis Prediction</div>
+          <div class="authors"><strong>Authors:</strong> Aminu Maigari, Zurinahni Zainol, Chew Xinying</div>
+          <div class="journal"><strong>Journal:</strong> Statistics, Optimization and Information Computing</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q3</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2310-5070</span>
+          </div>
+        </div>
+        <!-- 16 -->
+        <div class="card">
+          <div class="title">Visualizing NASDAQ Composite Index Historical Data Using Tableau</div>
+          <div class="authors"><strong>Authors:</strong> Halawati Abd Jalil Safuan, Chit Ko Ko Nyein, Basheer Riskhan, Farzeen Ashfaq</div>
+          <div class="journal"><strong>Journal:</strong> Computational Intelligence in Pattern Recognition</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 17 -->
+        <div class="card">
+          <div class="title">Multimodal Deep Learning Breast Cancer Prognosis Models: Review on Multimodal Architectures and Concatenation Approaches</div>
+          <div class="authors"><strong>Authors:</strong> Aminu Maigari, Chew Xinying, Zurinahni Zainol</div>
+          <div class="journal"><strong>Journal:</strong> Journal of Medical Artificial Intelligence</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q3</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2617-2496</span>
+          </div>
+        </div>
+        <!-- 18 -->
+        <div class="card">
+          <div class="title">An Analytical Review on Initiatives for a Sustainable Campus Operation in Malaysian Public Higher Education Institutions</div>
+          <div class="authors"><strong>Authors:</strong> Nurzalikha Sa’adi, Salfarina Abd Gapor, Faisal Tamrulan, Asmah Alia Mohamad Bohari</div>
+          <div class="journal"><strong>Journal:</strong> Journal of Surveying, Construction and Property (JSCP)</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> MyCite</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 1985-2587</span>
+          </div>
+        </div>
+        <!-- 19 -->
+        <div class="card">
+          <div class="title">The STEM Gap: Overcoming Obstacles and Incorporating Women Globally</div>
+          <div class="authors"><strong>Authors:</strong> N. Lohgheswary, Leelavathi Rajamanickam</div>
+          <div class="journal"><strong>Journal:</strong> Edelweiss Applied Science and Technology (Scopus)</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2576-8484</span>
+          </div>
+        </div>
+        <!-- 20 -->
+        <div class="card">
+          <div class="title">Vulnerabilities Assessment and Risk Management in Cyber Security</div>
+          <div class="authors"><strong>Authors:</strong> Khalid Hussain</div>
+          <div class="journal"><strong>Journal:</strong> IGI Global</div>
+          <div class="classification"><strong>Type:</strong> Research Book</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 9798369361351</span>
+          </div>
+        </div>
+        <!-- 21 -->
+        <div class="card">
+          <div class="title">Current Security Issues and Vulnerabilities Associated with Mobile Application</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Abdullahi Adewole Zakariyah, Md. Farman Ali, Md Amin Ullah Sheikh</div>
+          <div class="journal"><strong>Journal:</strong> 4th International Conference on Mathematical Modeling and Computational Science (ICMMCS 2025) (Springer, Scopus Indexed)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 22 -->
+        <div class="card">
+          <div class="title">Intergenerational Methods to Promote Digital Application Usage among Older Adults: A Scoping Review</div>
+          <div class="authors"><strong>Authors:</strong> Muhammad Asri Mohd Ali, Mohamed Imran Mohamed Ariff, Nahdatul Akma Ahmad, Nursyahidah Alias, Zirawani Baharum, Tengku Shahrom Tengku Shahdan</div>
+          <div class="journal"><strong>Journal:</strong> International Journal on Studies in Education</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> WoS</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2169-3536</span>
+          </div>
+        </div>
+        <!-- 23 -->
+        <div class="card">
+          <div class="title">Navigating Screen Time: Scoping Review on Parental Role in Shaping Children's Digital Habits</div>
+          <div class="authors"><strong>Authors:</strong> Nurul Asyiqin Jalil, Noor Hanim Harun, Rita Wong Mee Mee, Suzulaikha Mohamed, Lim Seong Pek, Tengku Shahrom Tengku Shahdan, Tirzah Zubeidah Zachariah Omar</div>
+          <div class="journal"><strong>Journal:</strong> International Journal of Technology in Education</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> WoS</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2689-2758</span>
+          </div>
+        </div>
+        <!-- 24 -->
+        <div class="card">
+          <div class="title">Conventional Media Credibility and Current Affairs News: Emergence of Alternative Media in Hasina-Era Bangladesh</div>
+          <div class="authors"><strong>Authors:</strong> Jahidul Islam, Dr Hisham Anand Barbhuiya, Yeasmin Akter, Sakib Rayhan, Farhana Akter, S M Asiful Islam Saky</div>
+          <div class="journal"><strong>Journal:</strong> International Journal of Social Science Research and Review</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2700-2497</span>
+          </div>
+        </div>
+        <!-- 25 -->
+        <div class="card">
+          <div class="title">Enhancing Diagnostic Accuracy for Breast Cancer Using Classical-Quantum Hybrid and Transfer Learning Technique</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Roua Alimam, Bakari Salim Mahaba, Dua-e-Uswa, Malrey Lee</div>
+          <div class="journal"><strong>Journal:</strong> Journal of Soft Computing and Data Mining</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Accepted</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q1</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2716-621X</span>
+          </div>
+        </div>
+        <!-- 26 -->
+        <div class="card">
+          <div class="title">The Impact of Economic Literacy Components on Entrepreneurship Potential Among Secondary School Students in Sik, Kedah</div>
+          <div class="authors"><strong>Authors:</strong> Bakare Kazeem Kayode, Kalthom Husain, Osaid N A Abdaljawwad</div>
+          <div class="journal"><strong>Journal:</strong> Educational Process: International Journal</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q1</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2147-0901</span>
+          </div>
+        </div>
+        <!-- 27 -->
+        <div class="card">
+          <div class="title">Exam Grades Prediction Mechanism (EGpM) Using Machine Learning Algorithms</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Noor Abdikhalak Hajj Noor, Hafiz Jibril, Hussein Waliyju</div>
+          <div class="journal"><strong>Journal:</strong> 4th International Conference Mathematical Modeling and Computational Science (ICMMCS 2025) (Springer, Scopus Indexed)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 28 -->
+        <div class="card">
+          <div class="title">An Implementation of RFID Enabled ID Cards in the Education Sector to Optimize and Facilitate the Use of Student Cards</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Nurul Ain Athirah Zali, Khalid Hussain</div>
+          <div class="journal"><strong>Journal:</strong> 6th International Conference on Computational Intelligence in Pattern Recognition (CIPR 2024) (Springer, Scopus Indexed)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 29 -->
+        <div class="card">
+          <div class="title">A Social Engineering Attacks Survey and Prevention Techniques</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Md Amin Ullah Sheikh, Md Shakil Hossain</div>
+          <div class="journal"><strong>Journal:</strong> 6th International Conference on Computational Intelligence in Pattern Recognition (CIPR 2024) (Springer, Scopus Indexed)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 30 -->
+        <div class="card">
+          <div class="title">Facial Recognition and Detection: Overcoming Pose Variations and Enhancing Accuracy with Machine Learning Implementation</div>
+          <div class="authors"><strong>Authors:</strong> Mozaherul Hoque Abul Hasanat, Mohamed Fofana, Mohammad Tamim, Basheer Riskhan, Rahul Singh</div>
+          <div class="journal"><strong>Journal:</strong> International Conference on Mathematical Modeling and Computational Science (ICMMCS 2025), Thailand. (Springer, Scopus Indexed)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3371</span>
+          </div>
+        </div>
+        <!-- 31 -->
+        <div class="card">
+          <div class="title">The Role and Impact of Ethical Hacking in Modern Society’s Economy</div>
+          <div class="authors"><strong>Authors:</strong> Nadiah Arsat, Habib Idriss Daoud, Zurinahni Zainol, Gaurav Kumar</div>
+          <div class="journal"><strong>Journal:</strong> 4th International Conference on Mathematical Modeling and Computational Science (ICMMCS 2025)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 32 -->
+        <div class="card">
+          <div class="title">Challenges and Limitations in Data Mining</div>
+          <div class="authors"><strong>Authors:</strong> Akibu Mahmoud Abdullahi, Sai Ahkar Htet, Basheer Riskhan</div>
+          <div class="journal"><strong>Journal:</strong> 6th International Conference on Computational Intelligence in Pattern Recognition (CIPR 2024) (Springer, Scopus Indexed)</div>
+          <div class="classification"><strong>Type:</strong> Proceedings</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> Q4</span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2367-3370</span>
+          </div>
+        </div>
+        <!-- 33 -->
+        <div class="card">
+          <div class="title">The Role of Social Entrepreneurs and Sustainability in Malaysia: A Scoping Review</div>
+          <div class="authors"><strong>Authors:</strong> Yuda Gesra Aryus, Nor Azilah Husin</div>
+          <div class="journal"><strong>Journal:</strong> Ahi Evran Akademi (AEA)</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2717-784X</span>
+          </div>
+        </div>
+        <!-- 34 -->
+        <div class="card">
+          <div class="title">Enhancing STEM Education in Rural Schools through Play Activities: A Scoping Review</div>
+          <div class="authors"><strong>Authors:</strong> Aminu Haliru Salame, Tengku Shahrom Tengku Shahdan, Bakare Kazeem Kayode, Lim Seong Pek</div>
+          <div class="journal"><strong>Journal:</strong> International Journal on Studies in Education</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> WoS</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 2690-7909</span>
+          </div>
+        </div>
+        <!-- 35 -->
+        <div class="card">
+          <div class="title">Navigating the Storm: Impact of COVID-19 Pandemic on Micro and Small Businesses in Alor Setar, Kedah, Malaysia</div>
+          <div class="authors"><strong>Authors:</strong> Halawati Abd Jalil Safuan, Mustaffa Omar</div>
+          <div class="journal"><strong>Journal:</strong> Artificial Intelligence, Digitalization and Regulation: A Legal Framework for Business</div>
+          <div class="classification"><strong>Type:</strong> Chapters in Research Book</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 36 -->
+        <div class="card">
+          <div class="title">Bridging Culture: Analysing the Role of Communication Strategies in Enhancing Cross-Cultural Interactions</div>
+          <div class="authors"><strong>Authors:</strong> Kalthom Husain, Sidra Shehzadi, Bakare Kazeem Kayode</div>
+          <div class="journal"><strong>Journal:</strong> Environment-Behaviour Proceedings Journal</div>
+          <div class="classification"><strong>Type:</strong> Article</div>
+          <div class="status">Accepted</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> WoS</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 37 -->
+        <div class="card">
+          <div class="title">FROM RESEARCH TO PUBLICATION: A MUST HAVE HANDBOOK FOR NOVICE QUANTITATIVE RESEARCHERS</div>
+          <div class="authors"><strong>Authors:</strong> Nor Azilah Husin, Mazni Saad, Astri Yulia</div>
+          <div class="journal"><strong>Publisher:</strong> IIUM Press</div>
+          <div class="classification"><strong>Type:</strong> Research Book</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> 978-967-491-451-6</span>
+          </div>
+        </div>
+        <!-- 38 -->
+        <div class="card">
+          <div class="title">Analyzing Mobile Apps Using Smart Assessment Methodology</div>
+          <div class="authors"><strong>Authors:</strong> Basheer Riskhan, Khalid Hussain, Halawati Abd Jalil Safuan</div>
+          <div class="journal"><strong>Publisher:</strong> IGI GLOBAL</div>
+          <div class="classification"><strong>Type:</strong> Research Book</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> Scopus</span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 39 -->
+        <div class="card">
+          <div class="title">CONSERVATION MANAGEMENT PLAN FORT SYLVIA, KAPIT, SARAWAK</div>
+          <div class="authors"><strong>Authors:</strong> Haris Fadzilah Abdul Rahman, Salfarina Abdul Gapor</div>
+          <div class="journal"><strong>Type:</strong> Technical Report</div>
+          <div class="classification"><strong>Classification:</strong> Technical Report</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+        <!-- 40 -->
+        <div class="card">
+          <div class="title">DILAPIDATION REPORT OF HISTORICAL BUILDING, FORT ARUNDELL, LUBUKANTU, SRIAMAN, SARAWAK</div>
+          <div class="authors"><strong>Authors:</strong> Haris Fadzilah Abdul Rahman, Salfarina Abdul Gapor, Aizat Rusydi Bin Md Saad, Md Johari Abu Hasan, Muhamad Redzuden Bin Mat, Yasmin Binti Haris Fadzilah, Nurul Aini Natasha Binti Mohd Rohaizad</div>
+          <div class="journal"><strong>Type:</strong> Technical Report</div>
+          <div class="classification"><strong>Classification:</strong> Technical Report</div>
+          <div class="status">Published</div>
+          <div class="tags">
+            <span class="tag"><i class="fas fa-database"></i> - </span>
+            <span class="tag"><i class="fas fa-trophy"></i> - </span>
+            <span class="tag"><i class="fas fa-barcode"></i> - </span>
+          </div>
+        </div>
+
+    <!-- Card 41 -->
+    <div class="card">
+      <div class="title">DILAPIDATION REPORT OF HISTORICAL BUILDING, FORT SYLVIA, KAPIT, SARAWAK</div>
+      <div class="authors"><strong>Authors:</strong> Haris Fadzilah Abdul Rahman, Salfarina Abdul Gapor, Aizat Rusydi Bin Md Saad, Md Johari Abu Hasan, Muhamad Redzuden Bin Mat, Yasmin Binti Haris Fadzilah, Nurul Aini Natasha Binti Mohd Rohaizad</div>
+      <div class="journal"><strong>Type:</strong> Technical Report</div>
+      <div class="classification"><strong>Classification:</strong> Technical Report</div>
+      <div class="status">Published</div>
+      <div class="tags">
+        <span class="tag"><i class="fas fa-database"></i> - </span>
+        <span class="tag"><i class="fas fa-trophy"></i> - </span>
+        <span class="tag"><i class="fas fa-barcode"></i> - </span>
+      </div>
+    </div>
+
+  </div>
+
+  <?php include __DIR__ . '/../includes/footer.php'; ?>
+
+</body>
+</html>

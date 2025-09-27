@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIM - Fostering Research & Innovation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* New Modern & Professional Color Palette: Deep Purple & Dark Gray */
+            --primary-bg: #1A1A2E;
+            --secondary-bg: #212A40;
+            --nav-bg: #10101A;
+            --accent-purple: #A98EDD;
+            --accent-purple-dark: #8C6FCB;
+            --light-text: #EAEAEA;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--light-text);
+        }
+
+        /* Hero section with background image and overlay */
+        .hero-bg {
+            /* NOTE: This is a placeholder image. Replace the URL below with your local image URL. */
+            background-image: url('https://aiu.edu.my/wp-content/uploads/2022/04/AIU-Building.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Card transition and subtle border effect */
+        .card-container {
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border-color 0.4s ease-in-out;
+            border-bottom: 4px solid transparent;
+        }
+        .card-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+            border-bottom-color: var(--accent-purple);
+        }
+
+        /* Login/Register button styling */
+        .btn-action {
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: var(--light-text);
+            border: 2px solid var(--accent-purple);
+        }
+        .btn-login:hover {
+            background-color: var(--accent-purple);
+            color: var(--primary-bg);
+            box-shadow: 0 5px 15px rgba(169, 142, 221, 0.4);
+        }
+
+        .btn-register {
+            background-color: var(--accent-purple);
+            color: var(--primary-bg);
+            border: 2px solid var(--accent-purple);
+        }
+        .btn-register:hover {
+            background-color: var(--accent-purple-dark);
+            box-shadow: 0 5px 15px rgba(169, 142, 221, 0.4);
+        }
+        
+        .social-icon {
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        .social-icon:hover {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-[var(--nav-bg)] shadow-xl">
+        <nav class="container mx-auto px-6 py-5 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="text-4xl font-black text-[var(--accent-purple)] tracking-wide">CRIM</a>
+            
+            <!-- Centered Navigation Links -->
+            <div class="hidden md:flex flex-1 justify-center items-center space-x-12 font-medium text-xl">
+                <a href="#" class="hover:text-[var(--accent-purple)] transition-colors duration-300">Home</a>
+                <a href="#" class="hover:text-[var(--accent-purple)] transition-colors duration-300">About</a>
+                <a href="#" class="hover:text-[var(--accent-purple)] transition-colors duration-300">Research</a>
+                <a href="#" class="hover:text-[var(--accent-purple)] transition-colors duration-300">Opportunities</a>
+                <a href="#" class="hover:text-[var(--accent-purple)] transition-colors duration-300">Events</a>
+                <a href="#" class="hover:text-[var(--accent-purple)] transition-colors duration-300">Forms</a>
+            </div>
+            
+            <!-- Login/Register Buttons -->
+            <div class="flex items-center space-x-4">
+                <a href="#" class="btn-action btn-login">Login</a>
+                <a href="#" class="btn-action btn-register">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section with Background Image -->
+        <section class="hero-bg h-[85vh] flex items-center justify-center p-4">
+            <div class="text-center z-10 p-12 max-w-4xl">
+                <h1 class="text-6xl md:text-7xl font-extrabold mb-4 leading-tight tracking-wide text-[var(--accent-purple)]">
+                    Driving Innovation & Excellence
+                </h1>
+                <p class="text-lg md:text-xl font-light text-gray-300 mb-8">
+                    The Centre for Research and Innovation Management at Albukhary International University.
+                </p>
+                <a href="#quicklinks-section" class="py-4 px-12 bg-[var(--accent-purple)] text-[var(--primary-bg)] font-bold rounded-full shadow-lg hover:bg-[var(--secondary-bg)] hover:text-white transition-colors duration-300 transform hover:scale-105">Explore Now</a>
+            </div>
+        </section>
+
+        <!-- Quick Links / Features Section (6 Containers) -->
+        <section id="quicklinks-section" class="container mx-auto px-6 py-24">
+            <h2 class="text-5xl font-bold text-center mb-16 text-[var(--accent-purple)]">Quick Links</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <div class="card-container bg-[var(--secondary-bg)] p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-[var(--accent-purple)] mb-3">My Profile</h3>
+                    <p class="text-gray-400">View and manage your personal and professional details.</p>
+                </div>
+                <div class="card-container bg-[var(--secondary-bg)] p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-[var(--accent-purple)] mb-3">Grant Applications</h3>
+                    <p class="text-gray-400">Submit new grant proposals and track their status.</p>
+                </div>
+                <div class="card-container bg-[var(--secondary-bg)] p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-[var(--accent-purple)] mb-3">Project Overview</h3>
+                    <p class="text-gray-400">Explore all active and past research projects.</p>
+                </div>
+                <div class="card-container bg-[var(--secondary-bg)] p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-[var(--accent-purple)] mb-3">Forms & Resources</h3>
+                    <p class="text-gray-400">Access essential forms and documents for researchers.</p>
+                </div>
+                <div class="card-container bg-[var(--secondary-bg)] p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-[var(--accent-purple)] mb-3">Announcements</h3>
+                    <p class="text-gray-400">Stay up-to-date with the latest news and updates.</p>
+                </div>
+                <div class="card-container bg-[var(--secondary-bg)] p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-[var(--accent-purple)] mb-3">Upcoming Events</h3>
+                    <p class="text-gray-400">View our calendar for upcoming conferences and workshops.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section class="container mx-auto px-6 py-24">
+            <h2 class="text-5xl font-bold text-center mb-16 text-[var(--accent-purple)]">Recent Publications & Books</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Publication 1 -->
+                <div class="card-container bg-[var(--secondary-bg)] p-8 rounded-2xl flex items-center space-x-6 shadow-xl">
+                    <img src="https://placehold.co/100x120/1A1A2E/A98EDD?text=BOOK" alt="Book Cover" class="rounded-lg shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold text-[var(--accent-purple)]">Title of Research Paper</h3>
+                        <p class="text-gray-400 text-sm italic">By Dr. John Doe</p>
+                        <p class="mt-2 text-gray-300">A detailed analysis of research methods in artificial intelligence...</p>
+                    </div>
+                </div>
+                <!-- Publication 2 -->
+                <div class="card-container bg-[var(--secondary-bg)] p-8 rounded-2xl flex items-center space-x-6 shadow-xl">
+                    <img src="https://placehold.co/100x120/1A1A2E/A98EDD?text=BOOK" alt="Book Cover" class="rounded-lg shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold text-[var(--accent-purple)]">Book on Social Innovation</h3>
+                        <p class="text-gray-400 text-sm italic">By Prof. Jane Smith</p>
+                        <p class="mt-2 text-gray-300">Exploring new models for fostering impactful community engagement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--primary-bg)] text-gray-400 py-20">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- About CRIM -->
+            <div>
+                <h4 class="text-2xl font-bold text-white mb-4">About CRIM</h4>
+                <p class="text-sm leading-relaxed">The Centre for Research and Innovation Management (CRIM) drives academic and social innovation at Albukhary International University.</p>
+            </div>
+            <!-- Contact Info -->
+            <div>
+                <h4 class="text-2xl font-bold text-white mb-4">Contact Us</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center space-x-2">
+                        <span>&#x2709;</span>
+                        <span>info@crim.edu.my</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <span>&#x260E;</span>
+                        <span>+603-1234 5678</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <span>&#x1F3E0;</span>
+                        <span>Jalan Pura, 05200 Alor Setar, Kedah, Malaysia</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- Social & Map -->
+            <div>
+                <h4 class="text-2xl font-bold text-white mb-4">Find Us</h4>
+                <div class="flex space-x-6 mb-6">
+                    <!-- Email SVG -->
+                    <a href="#" class="social-icon text-[var(--accent-purple)] hover:text-white">
+                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm-16 1.19v9.81c0 .55.45 1 1 1h14c.55 0 1-.45 1-1V7.19l-8 5-8-5z"/>
+                        </svg>
+                    </a>
+                    <!-- Instagram SVG -->
+                    <a href="#" class="social-icon text-[var(--accent-purple)] hover:text-white">
+                        <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.564 7.646c-.14-.242-.326-.452-.52-.646-.226-.226-.484-.424-.764-.582-.28-.158-.574-.298-.88-.41-.306-.112-.622-.196-.948-.258-.326-.062-.656-.096-.988-.096-.332 0-.662.034-.988.096-.326.062-.656.146-.988.258-.326.112-.622.252-.88.41-.28.158-.538.356-.764.582-.194.194-.38.404-.52.646-.14.242-.26.502-.352.782-.092.28-.152.576-.18.888-.028.312-.042.63-.042.956 0 .326.014.644.042.956.028.312.088.608.18.888.092.28.212.54.352.782.14.242.326.452.52.646.226.226.484.424.764.582.28.158.574.298.88.41.306.112.622.196.948.258.326.062.656.096.988.096.332 0 .662-.034.988-.096.326-.062.656-.146.988-.258.326-.112.622-.252.88-.41.28-.158.538-.356.764-.582.194-.194.38-.404.52-.646.14-.242.26-.502.352-.782.092-.28.152-.576.18-.888.028-.312.042-.63.042-.956 0-.326-.014-.644-.042-.956-.028-.312-.088-.608-.18-.888-.092-.28-.212-.54-.352-.782zM12 17.5c-3.033 0-5.5-2.467-5.5-5.5S8.967 6.5 12 6.5s5.5 2.467 5.5 5.5-2.467 5.5-5.5 5.5z"/>
+                        </svg>
+                    </a>
+                </div>
+                <!-- Google Maps Link -->
+                <a href="https://maps.app.goo.gl/9R684J3k7mK8c1p6A" target="_blank" class="text-sm underline hover:text-[var(--accent-purple)] transition-all duration-300">View on Google Maps</a>
+            </div>
+        </div>
+        <div class="text-center text-sm text-gray-500 mt-16 border-t border-gray-700 pt-8">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Centre for Research and Innovation Management. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Add a class to the body to indicate that JavaScript is enabled
+        document.body.classList.add('js-enabled');
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, orderBy, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Firebase Initialization and Auth ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+        }
+        
+        // Handle custom token sign-in or anonymous sign-in
+        if (initialAuthToken) {
+            signInWithCustomToken(auth, initialAuthToken).catch((error) => {
+                console.error("Custom token sign-in failed:", error);
+                signInAnonymously(auth); // Fallback to anonymous
+            });
+        } else {
+            signInAnonymously(auth); // Sign in anonymously if no token
+        }
+    </script>
+</body>
+</html>

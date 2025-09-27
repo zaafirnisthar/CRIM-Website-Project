@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | CRIM | AIU</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000; /* Black background */
+      color: #fff; /* White text */
+    }
+    header {
+      background-color: #111;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid gold;
+    }
+    header h1 {
+      color: gold;
+      font-size: 1.5rem;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      color: gold;
+    }
+    .hero {
+      padding: 50px 30px;
+      text-align: center;
+    }
+    .hero h2 {
+      color: gold;
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Contact Section */
+    .contact-container {
+      padding: 30px 50px;
+      margin-bottom: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+    }
+    
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+      background: #111;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+      border: 1px solid #333;
+    }
+    
+    .contact-form {
+      flex: 1;
+      min-width: 300px;
+      background: #111;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+      border: 1px solid #333;
+    }
+    
+    .section-title {
+      color: gold;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .info-icon {
+      color: gold;
+      font-size: 1.5rem;
+      margin-right: 15px;
+      min-width: 30px;
+      text-align: center;
+    }
+    
+    .info-content h3 {
+      color: gold;
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+    }
+    
+    .info-content p {
+      margin: 0;
+      color: #ccc;
+    }
+    
+    .info-content a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .info-content a:hover {
+      color: gold;
+    }
+    
+    /* Social Media */
+    .social-media {
+      margin-top: 30px;
+    }
+    
+    .social-title {
+      color: gold;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .social-icon {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #222;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 50px;
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s;
+      border: 2px solid #333;
+    }
+    
+    .social-icon:hover {
+      background-color: gold;
+      color: #000;
+      transform: translateY(-5px);
+      border-color: gold;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+    
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: gold;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background-color: #222;
+      color: white;
+      font-size: 1rem;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: gold;
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      background-color: gold;
+      color: #000;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      font-size: 1rem;
+    }
+    
+    .submit-btn:hover {
+      background-color: #ffea80;
+    }
+    
+    /* Map */
+    .map-container {
+      margin-top: 40px;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+      border: 1px solid #333;
+    }
+    
+    .map-container iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+    }
+    
+    footer {
+      background-color: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      border-top: 2px solid gold;
+      margin-top: 40px;
+    }
+    
+    footer a {
+      color: gold;
+      text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+      .contact-container {
+        padding: 20px 15px;
+        flex-direction: column;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      header h1 {
+        margin-bottom: 15px;
+      }
+      
+      .social-icons {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>CRIM | AIU</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="partners.html">Partners</a></li>
+        <li><a href="contact.html">Contact</a></li>
+         <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Contact Us</h2>
+    <p>Get in touch with the Centre for Research & Innovation Management. We'd love to hear from you!</p>
+  </section>
+
+  <section class="contact-container">
+    <div class="contact-info">
+      <h2 class="section-title">Get In Touch</h2>
+      
+      <div class="info-item">
+        <div class="info-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div class="info-content">
+          <h3>Address</h3>
+          <p>Albukhary International University<br>Jalan Tun Abdul Razak, 05200 Alor Setar<br>Kedah Darul Aman, Malaysia</p>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <div class="info-content">
+          <h3>Phone</h3>
+          <p><a href="tel:+6047747300">+60 4-774 7300</a></p>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="info-content">
+          <h3>Email</h3>
+          <p><a href="mailto:crim@aiu.edu.my">crim@aiu.edu.my</a></p>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <div class="info-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="info-content">
+          <h3>Working Hours</h3>
+          <p>Monday - Friday: 8:30 AM - 5:30 PM<br>Saturday & Sunday: Closed</p>
+        </div>
+      </div>
+      
+      <div class="social-media">
+        <h3 class="social-title">Follow Us</h3>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/AIUedu/" target="_blank" class="social-icon">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/aiuedu/?hl=en" target="_blank" class="social-icon">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://aiu.edu.my/" target="_blank" class="social-icon">
+            <i class="fab "></i>
+          </a>
+          <a href="https://www.linkedin.com/company/albukhary-international-university-aiu" target="_blank" class="social-icon">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="contact-form">
+      <h2 class="section-title">Send Us a Message</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+    
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+    
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.325389050317!2d100.36726227499618!3d6.068371093943919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304c6ac119f5b98d%3A0x5b6b32bdf5f5337!2sAlbukhary%20International%20University!5e0!3m2!1sen!2smy!4v1724736000000!5m2!1sen!2smy" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 CRIM | Albukhary International University</p>
+    <p>Email: <a href="mailto:crim@aiu.edu.my">crim@aiu.edu.my</a> | Phone: 04-774 7300</p>
+  </footer>
+
+  <script>
+    // Simple form validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // Simple validation
+      if (name && email && subject && message) {
+        // In a real application, you would send this data to a server
+        alert('Thank you for your message! We will get back to you soon.');
+        document.getElementById('contactForm').reset();
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+  </script>
+</body>
+</html>

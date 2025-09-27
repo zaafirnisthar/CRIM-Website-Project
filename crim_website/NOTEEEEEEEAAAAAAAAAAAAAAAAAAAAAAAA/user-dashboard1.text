@@ -1,0 +1,141 @@
+<?php
+session_start();
+require_once __DIR__ . '/../config/db.php';
+
+// Redirect if not logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: ../auth/login.php");
+    exit;
+}
+
+$userId = $_SESSION['user']['id'];
+$userName = $_SESSION['user']['fullname'];
+
+// Fetch announcements (latest 5)
+$announcements = $conn->query("SELECT * FROM announcements ORDER BY created_at DESC LIMIT 5");
+
+// Fetch submissions for this user
+$submissionsStmt = $conn->prepare("
+    SELECT id, leaderName, status, created_at 
+    FROM submissions 
+    WHERE user_id = ? 
+    ORDER BY created_at DESC
+");
+$submissionsStmt->bind_param("i", $userId);
+$submissionsStmt->execute();
+$submissions = $submissionsStmt->get_result();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+    background-color: #1a1a1a;
+    color: #f5f0dc;
+    font-family: 'Inter', sans-serif;
+}
+.header {
+    background-color: #2c2c2c;
+}
+.button-gold {
+    background-color: #FFD700;
+    color: #1a1a1a;
+    transition: 0.3s;
+}
+.button-gold:hover {
+    background-color: #e6c200;
+}
+.submission-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+}
+.submission-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+.card {
+    background-color: #2c2c2c;
+    transition: 0.3s;
+}
+.card:hover {
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
+}
+</style>
+</head>
+<body class="p-6">
+
+<!-- Header -->
+<header class="header flex items-center justify-center relative shadow p-6 rounded mb-8">
+    <h1 class="text-3xl font-bold text-yellow-400 absolute left-1/2 transform -translate-x-1/2">
+        Welcome, <?= htmlspecialchars($userName) ?> 👋
+    </h1>
+    <a href="../auth/logout.php" class="ml-auto bg-red-700 hover:bg-red-800 text-white px-5 py-2 rounded">
+        Logout
+    </a>
+</header>
+
+<main class="max-w-6xl mx-auto space-y-12">
+
+    <!-- Announcements -->
+    <section>
+        <h2 class="text-3xl font-bold mb-6 text-yellow-400 text-center">📢 Announcements</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <?php if ($announcements->num_rows > 0): ?>
+                <?php while ($a = $announcements->fetch_assoc()): ?>
+                    <div class="card rounded-lg shadow p-5">
+                        <h3 class="text-xl font-semibold text-yellow-400 mb-2"><?= htmlspecialchars($a['title']) ?></h3>
+                        <p class="text-sm text-gray-400 mb-2"><?= $a['created_at'] ?></p>
+                        <p class="text-gray-300"><?= htmlspecialchars($a['message']) ?></p>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-gray-400 text-center">No announcements available.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Section B Form Button -->
+    <section class="text-center">
+        <h2 class="text-3xl font-bold mb-6 text-yellow-400">📝 Apply for Section B Form</h2>
+        <a href="section_b_form.php" class="button-gold px-10 py-3 rounded-full font-semibold text-lg">
+            Apply Now
+        </a>
+    </section>
+
+    <!-- My Submissions -->
+    <section>
+        <h2 class="text-3xl font-bold mb-6 text-yellow-400 text-center">📄 My Submissions</h2>
+        <div class="rounded-lg shadow submission-container overflow-auto">
+            <?php if ($submissions->num_rows > 0): ?>
+                <ul class="divide-y divide-gray-700">
+                    <?php while ($s = $submissions->fetch_assoc()): ?>
+                        <li class="p-5 flex justify-between items-center hover:bg-gray-800 transition">
+                            <div>
+                                <h3 class="text-xl font-medium text-yellow-400"><?= htmlspecialchars($s['leaderName']) ?></h3>
+                                <p class="text-sm text-gray-400">Submitted on: <?= $s['created_at'] ?></p>
+                            </div>
+                            <?php if ($s['status'] === 'approved'): ?>
+                                <span class="submission-status bg-green-100 text-green-800">Approved</span>
+                            <?php elseif ($s['status'] === 'pending'): ?>
+                                <span class="submission-status bg-yellow-100 text-yellow-800">Pending</span>
+                            <?php else: ?>
+                                <span class="submission-status bg-gray-700 text-gray-300"><?= ucfirst($s['status']) ?></span>
+                            <?php endif; ?>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+            <?php else: ?>
+                <p class="p-4 text-gray-400 text-center">You have no submissions yet.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>
+          

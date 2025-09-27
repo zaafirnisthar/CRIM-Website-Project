@@ -1,0 +1,304 @@
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'Evaluating external debt sustainability across the globe: evidence from wavelet-based tests',
+    'Mumtaz Ahmed,\xa0Zulekha Qadeer,\xa0Muhammad Azam Khan\xa0and Toqeer Ahmed\xa0',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'Digital Gaming Media and Aggression: Exploring the Moderating Effects of Self-Esteem and Moral Identity',
+    'Mohd Ziyad Afiq Mohd Zaharim, Nurfatin Afza Mohamad Murad, AZlina Mohd Khir and Nur Syamimi Hamdan',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'Indonesia: Comparison Between the Most Consumption of Renewable and Non-Renewable Energy Toward CO2 Emissions',
+    'Abdul Hayy Haziq Mohamad, Muhammad Hafiz bin Muhammad Hisham, Salfarina Abdul Gapor',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'Impact of Workplace Safety on Business Success: Hazard Identification in Malaysia',
+    'Yeasmin Akter, S M Asiful Islam Saky, Jahidul Islam, Farhana Akter and Norizan Azizan',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'An Analytical Review on Initiatives for a Sustainable Campus Operation in Malaysian Public Higher Education Institutions',
+    'Nurzalikha Sa’adi, Salfarina Abd Gapor, Faisal Tamrulan, Asmah Alia Mohamad Bohari',
+    '2025-01-01',
+    'nan'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'The Role of Social Entrepreneurs and Sustainability in Malaysia: A Scoping Review',
+    'Yuda Gesra Aryus and Nor Azilah Husin',
+    '2025-01-01',
+    'https://dergipark.org.tr/tr/pub/aea/issue/92762/1705572'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'FROM RESEARCH TO PUBLICATION: A MUST HAVE HANDBOOK FOR NOVICE QUANTITATIVE RESEARCHERS',
+    'Nor Azilah Husin, Mazni Saad, Astri Yulia',
+    '2025-01-01',
+    'https://bookshop.iium.edu.my/from-research-to-publication-a-must-have-handbook-for-novice-quantitative-researchers'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'CONSERVATION MANAGEMENT PLAN FORT SYLVIA, KAPIT, SARAWAK',
+    'Haris Fadzilah Abdul Rahman, Salfarina Abdul Gapor',
+    '2025-01-01',
+    'nan'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'DILAPIDATION REPORT OF HISTORICAL BUILDING, FORTARUNDELL, LUBUKANTU, SRIAMAN, SARAWAK',
+    'Haris Fadzilah Abdul Rahman, Salfarina Abdul Gapor,  Aizat Rusydi Bin Md Saad, Md Johari Abu Hasan, Muhamad Redzuden Bin Mat, Yasmin Binti Haris Fadzilah, Nurul Aini Natasha Binti Mohd Rohaizad',
+    '2025-01-01',
+    'nan'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SBSS',
+    'DILAPIDATION REPORT OF HISTORICAL BUILDING, FORT SYLVIA, KAPIT, SARAWAK',
+    'Haris Fadzilah Abdul Rahman, Salfarina Abdul Gapor, Aizat Rusydi Bin Md Saad, Md Johari Abu Hasan, Muhamad Redzuden Bin Mat, Yasmin Binti Haris Fadzilah, Nurul Aini Natasha Binti Mohd Rohaizad',
+    '2025-01-01',
+    'nan'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Reinforcement Learning-Based Voting for Feature Drift-Aware Intrusion Detection: An Incremental Learning Framework',
+    'Methaq A. Shyaa, Noor Farizah Ibrahim, Zurinahni Binti Zainol, Rosni Abdullah and Mohammed Anbar',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Religious Sentiment Analysis and Detection on Social Media',
+    'Basheer Riskhan,\xa0Md Shakil Hossain\xa0and Farzeen Ashfaq',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Investigating Password Vulnerabilities and Protection Strategies',
+    'Khalid Hussain, Hassan Mohamednour Osman Haji, Amar Gamaa Mohmmood Farag, Hassan Edris Hassan & Himanshu Kumar ',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Real-Time Identification for Fake News on social media (Instagram)',
+    'Halawati Abd Jalil Safuan, Khalid Hussain, Raghad Al Yatim & Deepak Kumar ',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Multi-Modal Stacked Ensemble Model for Breast Cancer Prognosis Prediction',
+    'Aminu Maigari, Zurinahni Zainol, \r\nChew Xinying',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Visualizing NASDAQ Composite Index Historical Data Using Tableau',
+    'Halawati Abd Jalil Safuan,\xa0Chit Ko Ko Nyein,\xa0Basheer Riskhan\xa0and Farzeen Ashfaq\xa0',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Multimodal deep learning breast cancer prognosis models: review on multimodal architectures and concatenation approaches',
+    'Aminu Maigari,\xa0Chew Xinying,\xa0Zurinahni Zainol',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'The STEM gap: Overcoming obstacles and incorporating women globally',
+    'N. Lohgheswary, Leelavathi. R*',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Vulnerabilities Assessment and Risk Management in Cyber Security',
+    'Khalid Hussain',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Current Security Issues and Vulnerabilities Associated with Mobile Application',
+    'Basheer Riskhan, Abdullahi Adewole Zakariyah, Md. Farman Ali, Md Amin Ullah Sheikh',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Enhancing Diagnostic Accuracy for Breast Cancer Using Classical-Quantum Hybrid and Transfer Learning Technique',
+    'Basheer Riskhan, Roua Alimam, Bakari Salim Mahaba, Dua-e-Uswa, Malrey Lee',
+    '2025-01-01',
+    'nan'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Exam Grades Prediction Mechanism (EGpM) Using Machine Learning Algorithms',
+    'Basheer Riskhan, Noor Abdikhalak Hajj Noor, Hafiz Jibril and Hussein Waliyju4',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'An Implementation of RFID\nEnabled ID Cards in the Education Sector to Optimize and Facilitate the\nUse of Student Cards\n',
+    'Basheer Riskhan, Nurul Ain Athirah Zali, Khalid Hussain',
+    '2025-01-01',
+    'An Implementation of RFID Enabled ID Cards in the Education Sector to Optimize and Facilitate the Use of Student Cards'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'A Social Engineering Attacks Survey and Prevention Techniques',
+    'Basheer Riskhan, Md Amin Ullah Sheikh, Md Shakil Hossain,',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Facial Recognition and Detection: Overcoming Pose Variations and Enhancing Accuracy with Machine Learning Implementation',
+    'Mozaherul Hoque Abul Hasanat, Mohamed Fofana, Mohammad Tamim, Basheer Riskhan and Rahul Singh',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'The Role and Impact of Ethical Hacking in Modern\nSociety’s Economy',
+    'Nadiah Arsat, Habib Idriss Daoud,\nZurinahni Zainol and Gaurav Kumar',
+    '2025-01-01',
+    'The Role and Impact of Ethical Hacking in Modern Society’s Economy'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Challenges and Limitations in Data Mining',
+    'Akibu Mahmoud Abdullahi,\nSai Ahkar Htet,\nBasheer Riskhan',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'A Methodical Approach to Exploiting Vulnerabilities and Countermeasures Using AI',
+    'Basheer Riskhan, Md Amin Ullah Sheikh, Md Shakil Hossain, Khalid Hussain, Manzoor Hussain',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Navigating the Storm: Impact of COVID-19 Pandemic on Micro and Small Businesses in Alor Setar, Kedah, Malaysia.',
+    'Halawati Abd Jalil Safuan, Mustaffa Omar',
+    '2025-01-01',
+    'https://books.google.com.my/books?id=NXc1EQAAQBAJ&printsec=frontcover#v=onepage&q&f=false'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SCI',
+    'Analyzing Mobile Apps Using Smart Assessment Methodology',
+    'Basheer Riskhan, Khalid Hussain, Halawati Abd Jalil Safuan',
+    '2025-01-01',
+    'https://www.igi-global.com/book/analyzing-mobile-apps-using-smart/346235'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'Exploring Elementary Teachers’ Pedagogy in Teaching Science\nfor Upper Standard: A Case Study',
+    'Siti Aisyah Ghazali and Aini Syahira Jamaluddin',
+    '2025-01-01',
+    'Exploring Elementary Teachers’ Pedagogy in Teaching Science for Upper Standard: A Case Study'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'The Effects of Inclusive Education on Regular Elementary\nStudents’ Academic Performance: A Case Study in Bali Indonesia',
+    'Salsabila and Aini Syahira Jamaluddin',
+    '2025-01-01',
+    'The Effects of Inclusive Education on Regular Elementary Students’ Academic Performance: A Case Study in Bali Indonesia'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'Intergenerational Methods to Promote Digital Application Usage among Older Adults: A Scoping Review',
+    'Muhammad Asri Mohd Ali, Mohamed Imran Mohamed Ariff, Nahdatul Akma Ahmad, Nursyahidah Alias, Zirawani Baharum, Tengku Shahrom Tengku Shahdan',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    "Navigating Screen Time: Scoping Review onParental Rolein Shaping Children's Digital Habits",
+    'Nurul Asyiqin Jalil, Noor Hanim Harun, Rita Wong Mee Mee, Suzulaikha Mohamed, Lim Seong Pek, Tengku Shahrom Tengku Shahdan, Tirzah Zubeidah Zachariah Omar',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'Conventional Media Credibility and Current Affairs News: Emergence of Alternative Media in Hasina-Era\n Bangladesh',
+    'Jahidul Islam, Dr Hisham Anand Barbhuiya, Yeasmin Akter, Sakib Rayhan, Farhana Akter, S M Asiful Islam Saky',
+    '2025-01-01',
+    '"Conventional Media Credibility and Current Affairs News: Emergence of Alternative Media in Hasina-Era  Bangladesh"'
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'The Impact of Economic Literacy Components on Entrepreneurship Potential Among Secondary School Students in Sik, Kedah',
+    'Bakare Kazeem Kayode , Kalthom Husain , Osaid N A Abdaljawwad',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'Enhancing STEM Education in Rural Schools through Play Activities: A Scoping Review',
+    'Aminu Haliru Salame, Tengku Shahrom Tengku Shahdan, Bakare Kazeem Kayode, Lim Seong Pek',
+    '2025-01-01',
+    ''
+);
+INSERT INTO publications (department, title, author, publish_date, link)
+VALUES (
+    'SEHS',
+    'Bridging Culture: Analysing the Role of Communication Strategies in Enhancing Cross-Cultural Interactions',
+    'Kalthom Husain, Sidra Shehzadi, Bakare Kazeem Kayode',
+    '2025-01-01',
+    'nan'
+);

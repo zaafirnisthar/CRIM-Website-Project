@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albukhary International University - Homepage</title>
+    <!-- Use Tailwind CSS for rapid, modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Use Google Fonts for the Inter font family -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <style>
+        :root {
+            --dark-gold: #b38b00;
+            --light-gold: #d4af37;
+            --dark-bg: #111111;
+            --light-bg: #1a1a1a;
+            --light-text: #f0f0f0;
+        }
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+        }
+
+
+        /* Custom styles for the nav links to add a hover effect */
+        .nav-link {
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: var(--light-gold);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+
+        .nav-link:hover {
+            color: var(--light-gold);
+            transform: translateY(-2px);
+        }
+
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+
+        /* Carousel container for the event posters */
+        #poster-carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+
+        .carousel-slide {
+            flex-shrink: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px 12px 0 0;
+        }
+       
+        /* Book and Partner Logo Hover Effects */
+        .book-preview, .partner-logo {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+
+        .partner-logo img {
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: grayscale(100%);
+        }
+
+
+        .partner-logo:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-light-text">
+
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-light-bg text-light-text p-6 sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto flex items-center justify-between">
+            <div class="flex-1 flex justify-center space-x-8 lg:space-x-12">
+                <!-- Navigation Links -->
+                <ul class="flex-1 flex justify-center space-x-8 lg:space-x-12">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">About Us</a></li>
+                    <li><a href="#" class="nav-link">Research Area</a></li>
+                    <li><a href="#" class="nav-link">Innovation and Impact</a></li>
+                    <!-- Publication Opportunities with Dropdown -->
+                    <li class="relative group">
+                        <button class="nav-link flex items-center">
+                            Publication Opportunities
+                            <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 transform group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute left-1/2 -translate-x-1/2 mt-2 w-max rounded-md shadow-lg bg-dark-bg ring-1 ring-black ring-opacity-5 hidden group-hover:block transition-all duration-300">
+                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <a href="#" class="block px-4 py-2 text-sm text-light-text hover:bg-light-gold hover:text-dark-bg">Research</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-light-text hover:bg-light-gold hover:text-dark-bg">Publication</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Account & Login/Register Dropdown -->
+            <div class="relative group">
+                <button class="nav-link p-2 rounded-full hover:bg-light-gold hover:text-dark-bg transition-colors duration-300">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </button>
+                <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-dark-bg ring-1 ring-black ring-opacity-5 hidden group-hover:block transition-all duration-300">
+                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <a href="#" class="block px-4 py-2 text-sm text-light-text hover:bg-light-gold hover:text-dark-bg">Login</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-light-text hover:bg-light-gold hover:text-dark-bg">Register</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="container mx-auto px-4 py-12 space-y-24">
+
+
+        <!-- Hero Section: A more impactful introduction to the page -->
+        <section id="hero" class="relative overflow-hidden rounded-xl shadow-2xl p-16 md:p-24 text-center"
+            style="background: linear-gradient(135deg, var(--dark-bg) 0%, var(--light-gold) 150%);">
+            <div class="relative z-10">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-light-text">
+                    Empowering Social Change Through Research
+                </h1>
+                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+                    Albukhary International University is dedicated to fostering research and innovation that makes a tangible impact on society.
+                </p>
+                <a href="#quick-links" class="mt-8 inline-block px-10 py-4 bg-light-gold text-dark-bg font-bold rounded-full shadow-lg hover:bg-dark-gold hover:text-light-text transition-all duration-300 transform hover:scale-105">
+                    Explore Our Work
+                </a>
+            </div>
+        </section>
+
+
+        <!-- Highlight and Events Section (Now an Automatic Carousel) -->
+        <section id="highlights" class="text-center">
+            <h2 class="text-4xl font-bold text-light-gold mb-12">Highlights & Events</h2>
+            <div id="poster-carousel" class="relative">
+                <div class="carousel-track flex">
+                    <!-- Carousel Slide 1 -->
+                    <div class="carousel-slide">
+                        <!-- IMPORTANT: Replace `src` with your actual image paths, e.g., src="../images/hl poster 1.jpg" -->
+                        <img src="https://placehold.co/800x600/d4af37/1a1a1a?text=Event+1" alt="Highlight Poster 1" class="rounded-t-lg">
+                        <div class="p-4 bg-light-bg w-full rounded-b-lg text-center">
+                            <p class="text-sm">Description for Highlight Poster 1. This is a brief summary of the event.</p>
+                        </div>
+                    </div>
+                    <!-- Carousel Slide 2 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x600/b38b00/f0f0f0?text=Event+2" alt="Highlight Poster 2" class="rounded-t-lg">
+                        <div class="p-4 bg-light-bg w-full rounded-b-lg text-center">
+                            <p class="text-sm">Description for Highlight Poster 2. A different event description.</p>
+                        </div>
+                    </div>
+                    <!-- Carousel Slide 3 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x600/d4af37/1a1a1a?text=Event+3" alt="Highlight Poster 3" class="rounded-t-lg">
+                        <div class="p-4 bg-light-bg w-full rounded-b-lg text-center">
+                            <p class="text-sm">Description for Highlight Poster 3. More details about this event.</p>
+                        </div>
+                    </div>
+                    <!-- Carousel Slide 4 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x600/b38b00/f0f0f0?text=Event+4" alt="Highlight Poster 4" class="rounded-t-lg">
+                        <div class="p-4 bg-light-bg w-full rounded-b-lg text-center">
+                            <p class="text-sm">Description for Highlight Poster 4. Another key highlight.</p>
+                        </div>
+                    </div>
+                    <!-- Carousel Slide 5 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x600/d4af37/1a1a1a?text=Event+5" alt="Highlight Poster 5" class="rounded-t-lg">
+                        <div class="p-4 bg-light-bg w-full rounded-b-lg text-center">
+                            <p class="text-sm">Description for Highlight Poster 5. This event was a great success.</p>
+                        </div>
+                    </div>
+                    <!-- Carousel Slide 6 -->
+                    <div class="carousel-slide">
+                        <img src="https://placehold.co/800x600/b38b00/f0f0f0?text=Event+6" alt="Highlight Poster 6" class="rounded-t-lg">
+                        <div class="p-4 bg-light-bg w-full rounded-b-lg text-center">
+                            <p class="text-sm">Description for Highlight Poster 6. A final event description.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Quick Links Section -->
+        <section id="quick-links">
+            <h2 class="text-4xl font-bold text-light-gold text-center mb-12">Quick Links</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Publication & Research -->
+                <div class="rounded-xl p-8 shadow-xl border border-light-gold/20 bg-light-bg">
+                    <h3 class="text-3xl font-semibold mb-6">Publication & Research</h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Book Preview 1 -->
+                        <div class="book-preview bg-dark-bg rounded-lg p-4 cursor-pointer">
+                            <img src="https://placehold.co/200x280/d4af37/1a1a1a?text=Book+1" alt="Book Cover 1" class="rounded-md mb-4 mx-auto">
+                            <h4 class="font-semibold text-lg text-light-gold">The Future of Social Business</h4>
+                            <p class="text-sm text-gray-400 mt-2">A comprehensive look at sustainable business models.</p>
+                            <a href="#" class="mt-4 inline-block text-sm text-light-gold hover:underline">Read more &rarr;</a>
+                        </div>
+                        <!-- Book Preview 2 -->
+                        <div class="book-preview bg-dark-bg rounded-lg p-4 cursor-pointer">
+                            <img src="https://placehold.co/200x280/b38b00/f0f0f0?text=Book+2" alt="Book Cover 2" class="rounded-md mb-4 mx-auto">
+                            <h4 class="font-semibold text-lg text-light-gold">Poverty and Development</h4>
+                            <p class="text-sm text-gray-400 mt-2">An exploration of global challenges and solutions.</p>
+                            <a href="#" class="mt-4 inline-block text-sm text-light-gold hover:underline">Read more &rarr;</a>
+                        </div>
+                        <!-- Book Preview 3 -->
+                        <div class="book-preview bg-dark-bg rounded-lg p-4 cursor-pointer">
+                            <img src="https://placehold.co/200x280/d4af37/1a1a1a?text=Book+3" alt="Book Cover 3" class="rounded-md mb-4 mx-auto">
+                            <h4 class="font-semibold text-lg text-light-gold">Education as a Catalyst</h4>
+                            <p class="text-sm text-gray-400 mt-2">Examining the role of education in social change.</p>
+                            <a href="#" class="mt-4 inline-block text-sm text-light-gold hover:underline">Read more &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Funding Opportunities -->
+                <div class="flex flex-col items-center justify-center p-8 rounded-xl shadow-xl border border-light-gold/20 bg-light-bg">
+                    <h3 class="text-3xl font-semibold mb-6">Funding Opportunities</h3>
+                    <p class="text-center mb-6 max-w-lg">Discover new grants, scholarships, and funding for your research and projects. Click the button to explore possibilities.</p>
+                    <a href="#" class="px-8 py-4 bg-light-gold text-dark-bg font-bold rounded-full shadow-lg hover:bg-dark-gold hover:text-light-text transition-all duration-300 transform hover:scale-105">
+                        View Opportunities
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Albukhary Social Business Journal -->
+        <section id="journal" class="rounded-xl shadow-2xl overflow-hidden">
+            <div class="flex flex-col md:flex-row bg-light-gold/10">
+                <div class="md:w-2/3 p-10 flex flex-col justify-center">
+                    <h3 class="text-4xl font-bold text-light-gold mb-4">Albukhary Social Business Journal</h3>
+                    <p class="text-lg mb-6">
+                        The Albukhary Social Business Journal is a leading academic publication that explores innovative ideas and research in social entrepreneurship and business for good.
+                    </p>
+                    <a href="#" class="px-6 py-3 bg-light-gold text-dark-bg font-semibold rounded-full w-max hover:bg-dark-gold hover:text-light-text transition-colors duration-300">
+                        Learn More & View
+                    </a>
+                </div>
+                <div class="md:w-1/3 overflow-hidden">
+                    <img src="https://placehold.co/800x600/b38b00/f0f0f0?text=Journal+Photo" alt="Albukhary Social Business Journal" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Partners & Collaborators Section -->
+        <section id="partners" class="text-center">
+            <h2 class="text-4xl font-bold text-light-gold mb-12">Partners & Collaborators</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center justify-center">
+                <!-- IMPORTANT: Replace `src` with your actual image paths, e.g., src="../images/ptn 1.png" -->
+                <div class="partner-logo">
+                    <img src="https://placehold.co/200x100/1a1a1a/d4af37?text=Partner+1" alt="Partner Logo 1" class="w-full h-auto">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://placehold.co/200x100/1a1a1a/d4af37?text=Partner+2" alt="Partner Logo 2" class="w-full h-auto">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://placehold.co/200x100/1a1a1a/d4af37?text=Partner+3" alt="Partner Logo 3" class="w-full h-auto">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://placehold.co/200x100/1a1a1a/d4af37?text=Partner+4" alt="Partner Logo 4" class="w-full h-auto">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://placehold.co/200x100/1a1a1a/d4af37?text=Partner+5" alt="Partner Logo 5" class="w-full h-auto">
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="bg-light-bg text-light-text py-12 border-t border-light-gold/20">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Contact Info -->
+            <div>
+                <h4 class="font-bold text-lg text-light-gold mb-4">Contact Us</h4>
+                <p>Jalan Tun Abdul Razak, 05200 Alor Setar, Kedah</p>
+                <p>Email: <a href="mailto:contact@aiu.edu.my" class="hover:underline">contact@aiu.edu.my</a></p>
+                <p>Phone: +604-747-4000</p>
+            </div>
+            <!-- Social Media Links -->
+            <div>
+                <h4 class="font-bold text-lg text-light-gold mb-4">Follow Us</h4>
+                <div class="flex space-x-4 text-2xl">
+                    <a href="#" class="hover:text-light-gold transition-colors duration-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-light-gold transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-light-gold transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-light-gold transition-colors duration-300"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <!-- Location Map -->
+            <div class="md:col-span-2">
+                <h4 class="font-bold text-lg text-light-gold mb-4 text-center">Our Location</h4>
+                <div class="relative w-full overflow-hidden" style="padding-top: 56.25%;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.625695333583!2d100.38042457500588!3d6.138865493867006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304c5a939103e5c9%3A0x6b6e4e5b3f115993!2sAlbukhary%20International%20University!5e0!3m2!1sen!2smy!4v1691234567890!5m2!1sen!2smy"
+                        class="absolute inset-0 w-full h-full rounded-xl mx-auto" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-sm text-gray-400">
+            <p>&copy; <span id="currentYear"></span> Copyright by phyo. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Get the current year for the copyright notice
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+
+        // Automatic Carousel functionality
+        const carousel = document.getElementById('poster-carousel');
+        const track = carousel.querySelector('.carousel-track');
+        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+        let slideIndex = 0;
+        let slideInterval;
+
+
+        function updateCarousel() {
+            const slideWidth = slides[0].offsetWidth;
+            track.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
+        }
+       
+        function startCarousel() {
+            slideInterval = setInterval(() => {
+                slideIndex = (slideIndex + 1) % slides.length;
+                updateCarousel();
+            }, 3000); // Change slide every 3 seconds
+        }
+
+
+        function stopCarousel() {
+            clearInterval(slideInterval);
+        }
+
+
+        // Pause on hover
+        carousel.addEventListener('mouseenter', stopCarousel);
+        carousel.addEventListener('mouseleave', startCarousel);
+       
+        // Start the carousel on page load
+        document.addEventListener('DOMContentLoaded', startCarousel);
+
+
+        // Add class for smooth scroll behavior in nav links
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Offset for the fixed header
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

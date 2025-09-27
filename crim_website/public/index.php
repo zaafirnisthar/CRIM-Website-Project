@@ -1,0 +1,1139 @@
+<?php
+// public/index.php
+// Fully standalone homepage (single file) — expects an images folder at ../images
+
+// --- PHP: discover images in ../images ---
+$imagesDir = __DIR__ . '/../images';
+$allFiles = [];
+if (is_dir($imagesDir)) {
+    // search common image extensions
+    $allFiles = glob($imagesDir . '/*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);
+    // stabilize order (nice to sort by name)
+    sort($allFiles, SORT_NATURAL | SORT_FLAG_CASE);
+}
+$hlImages = [];   // highlights (posters)
+$ptnImages = [];  // partners
+$bookImages = []; // publication previews
+$asbjImage = null;
+$accountImage = null;
+foreach ($allFiles as $f) {
+    $bn = basename($f);
+    $ln = strtolower($bn);
+    if (strpos($ln, 'hl') !== false || strpos($ln, 'poster') !== false) {
+        $hlImages[] = $f;
+    } elseif (strpos($ln, 'ptn') !== false || strpos($ln, 'partner') !== false) {
+        $ptnImages[] = $f;
+    } elseif (strpos($ln, 'book') !== false || strpos($ln, 'bk') !== false) {
+        $bookImages[] = $f;
+    } elseif (strpos($ln, 'asbj') !== false || strpos($ln, 'journal') !== false) {
+        $asbjImage = $f;
+    } elseif (strpos($ln, 'account') !== false || strpos($ln, 'avatar') !== false) {
+        $accountImage = $f;
+    }
+}
+// Provide basic fallbacks (so page still looks good even if folder empty)
+$placeholder = '../images/placeholder.png'; // optional: you may add a placeholder.png in images
+if (empty($hlImages)) {
+    // fallback: show any 6 images if available
+    $hlImages = array_slice($allFiles, 0, 6);
+}
+if (empty($ptnImages)) {
+    $ptnImages = array_slice($allFiles, 0, 5);
+}
+if (empty($bookImages)) {
+    $bookImages = array_slice($allFiles, 0, 4);
+}
+if (!$asbjImage && !empty($allFiles)) $asbjImage = $allFiles[0];
+if (!$accountImage) $accountImage = null; // will use SVG fallback
+
+// helper to generate web url for image (URL-encode filename)
+function imgUrl($path) {
+    if (!$path) return '';
+    $bn = basename($path);
+    return '../images/' . rawurlencode($bn);
+}
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CRIM — Centre for Research & Innovation</title>
+  <meta name="description" content="CRIM — research, innovation, publications, and funding opportunities" />
+  <style>
+  /* ---------------------------
+     THEME / RESET
+     --------------------------- */
+  :root{
+    --bg-900:#050607;
+    --bg-800:#0a0b0d;
+    --gold:#d4af37;
+    --gold-soft:#f6e3a8;
+    --muted:#9aa2a6;
+    --text:#f6f7f8;
+    --glass: rgba(255,255,255,0.03);
+    --card-shadow: 0 20px 60px rgba(2,6,12,0.6);
+    --radius:14px;
+    --maxw:1200px;
+    --accent-grad: linear-gradient(90deg,#2dd4bf,#06b6d4);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(212,175,55,0.03), transparent 6%),
+      linear-gradient(180deg,var(--bg-900) 0%, var(--bg-800) 65%);
+    color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  a{color:inherit}
+  img{display:block;max-width:100%}
+
+  /* helper container */
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:18px; }
+
+  /* ---------------------------
+     NAVBAR
+     --------------------------- */
+  .topbar{
+    position:sticky; top:12px; z-index:1400; margin:12px; padding:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px; box-shadow: 0 6px 24px rgba(0,0,0,0.45); backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .navwrap{ max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:4px 12px; }
+  .brand-title{ font-weight:700; color:var(--gold); letter-spacing:0.4px; font-size:16px; }
+  .nav-center{ display:flex; gap:18px; align-items:center; }
+  .nav-center a{ color:var(--gold-soft); text-decoration:none; font-weight:600; padding:8px 12px; border-radius:10px; transition:all .16s ease; }
+  .nav-center a:hover{ color:var(--gold); transform:translateY(-3px); background:rgba(255,255,255,0.01); }
+
+  .nav-right{ display:flex; gap:12px; align-items:center; }
+  .account img{ width:42px; height:42px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,0.03); }
+  .hamburger{ display:none; background:transparent; border:0; padding:8px; cursor:pointer; }
+
+  /* ---------------------------
+     HERO — totally new design & style (left) + small photo (right)
+     --------------------------- */
+
+
+
+
+  /* HERO SECTION */
+
+.hero-bg {
+    width: 100%;
+    height: 90vh; /* adjust height as needed */
+    background: url('../images/aiubuilding.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 1rem; /* optional rounded corners */
+    overflow: hidden;
+}
+
+/* Optional overlay for readability */
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* adjust darkness */
+    z-index: 0;
+}
+
+.hero-content {
+    text-align: center;
+    position: relative;
+    color: #fff;
+    z-index: 1; /* above overlay */
+    padding: 0 20px;
+
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 1000;
+    margin-bottom: 1rem;
+      color: #FFD700; /* bright gold */
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6); 
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+   
+     color: #ffffff; /* bright white */
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5); /* subtle shadow */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+}
+
+
+
+
+
+
+  /* ---------------------------
+     HIGHLIGHTS & EVENTS (poster strip) — horizontal snap + auto-scroll
+     --------------------------- */
+  .highlights-wrap{ padding:28px 18px 10px; max-width:var(--maxw); margin:6px auto 0; }
+  .highlights-wrap h2{ color:var(--gold); margin-bottom:12px; font-size:20px; text-align:center; }
+  .high-carousel {
+    position:relative;
+    display:flex;
+    gap:16px;
+    overflow-x:auto;
+    padding:12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .high-card {
+    flex: 0 0 320px;
+    height:420px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:8px;
+    scroll-snap-align:center;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    position:relative;
+    cursor:pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .high-card:hover{ transform: translateY(-8px); box-shadow: 0 36px 80px rgba(0,0,0,0.68); }
+  .high-card img{ width:100%; height:100%; object-fit:cover; border-radius:8px; display:block; }
+  .high-overlay {
+    position:absolute; left:12px; right:12px; bottom:12px; padding:10px; border-radius:8px; backdrop-filter: blur(4px);
+    background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.45));
+    color:#fff;
+  }
+  .high-title{ font-weight:800; font-size:15px; margin-bottom:6px; }
+  .high-sub{ font-size:13px; color:rgba(255,255,255,0.9); }
+
+  .high-controls { display:flex; gap:10px; justify-content:center; margin-top:8px; }
+  .high-controls button { background:rgba(255,255,255,0.03); color:var(--gold); border-radius:10px; padding:8px 10px; border:1px solid rgba(255,255,255,0.03); cursor:pointer; }
+
+  /* lightbox */
+  .lightbox {
+    position:fixed; left:0; top:0; right:0; bottom:0; display:none; align-items:center; justify-content:center; z-index:2200;
+    background:linear-gradient(rgba(1,1,1,0.88), rgba(0,0,0,0.95)); padding:20px;
+  }
+  .lightbox .inner{ max-width:1100px; width:95%; }
+  .lightbox img{ width:100%; height:auto; border-radius:10px; box-shadow:0 40px 120px rgba(0,0,0,0.9); }
+  .light-meta{ margin-top:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+
+  /* ---------------------------
+     BOOK PREVIEW + FUNDING
+     --------------------------- */
+  .books-wrap{ padding:28px 18px 10px; max-width:var(--maxw); margin:18px auto 0; }
+  .books-wrap h2{ color:var(--gold); margin-bottom:14px; font-size:20px; text-align:center; }
+  .books-grid { display:grid; grid-template-columns: 1fr 360px; gap:22px; align-items:start; }
+
+  .book-list { display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
+  .book-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); transition: transform .22s ease, box-shadow .22s ease; display:flex; flex-direction:column; align-items:center; text-align:center; }
+  /* smaller preview images (user requested smaller photos) */
+  .book-card img{ width:120px; height:170px; object-fit:cover; border-radius:8px; box-shadow: 0 10px 26px rgba(0,0,0,0.45); }
+  .book-card h4{ margin:10px 0 4px; color:var(--gold); font-size:14px; }
+  .book-card:hover{ transform: translateY(-6px); box-shadow: 0 26px 60px rgba(0,0,0,0.6); }
+
+  .read-more-wrap { margin-top:14px; text-align:center; grid-column: 1 / -1; }
+  .read-more { display:inline-block; padding:10px 18px; border-radius:12px; background:linear-gradient(90deg,var(--gold),#f6e8a0); color:#0b0b0b; font-weight:800; text-decoration:none; box-shadow:0 10px 26px rgba(212,175,55,0.12); transition: transform .14s; }
+  .read-more:hover{ transform: translateY(-3px); }
+
+  .funding-card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:var(--card-shadow); display:flex; flex-direction:column; gap:12px; justify-content:center; align-items:flex-start; }
+  .funding-card h3{ color:var(--gold); margin:0; font-size:18px; }
+  .funding-card p{ color:var(--muted); margin:0; line-height:1.5; }
+  .fund-btn { margin-top:8px; padding:10px 14px; background:var(--gold); color:#111; border-radius:10px; font-weight:800; text-decoration:none; }
+
+  /* partners + journal + footer */
+  .partners-wrap{ padding:28px 8px; background:transparent; border-top:1px solid rgba(255,255,255,0.02); border-bottom:1px solid rgba(255,255,255,0.02); }
+  .partners-inner{ max-width:var(--maxw); margin:auto; overflow:hidden; }
+  .partner-track{ display:flex; gap:36px; align-items:center; padding:18px 6px; animation: marquee 20s linear infinite; }
+  .partner-track img{ height:72px; filter:grayscale(100%) brightness(.85); transition: transform .28s ease, filter .28s ease; border-radius:10px; }
+  .partner-track img:hover{ filter:none; transform: scale(1.07); }
+  .partners-wrap:hover .partner-track{ animation-play-state:paused; }
+  @keyframes marquee { 0%{ transform: translateX(0) } 100%{ transform: translateX(-50%) } }
+
+  .journal{ max-width:var(--maxw); margin:32px auto; display:flex; gap:20px; align-items:center; padding:18px; flex-wrap:wrap; }
+  .journal .left{ flex:1; min-width:260px; }
+  /* bigger title, smaller photo per user's request */
+  .journal h3{ color:var(--gold); margin:0 0 10px; font-size:28px; font-weight:900; }
+  .journal .right{ width:200px; min-width:160px; border-radius:12px; overflow:hidden; box-shadow:var(--card-shadow); }
+  .journal .right img{ width:100%; height:auto; display:block; object-fit:cover; }
+
+  footer{ background:#070708; padding:36px 18px 24px; color:var(--muted); margin-top:30px; }
+  .footer-grid{ max-width:var(--maxw); margin:auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; align-items:start; }
+  .footer h4{ color:var(--gold); margin:0 0 8px; }
+  .copy{ text-align:center; margin-top:18px; color:var(--muted); font-size:13px; }
+
+  /* Responsive */
+  @media (max-width:980px){
+    .hero-creative{ grid-template-columns:1fr; }
+    .books-grid { grid-template-columns: 1fr; }
+    .funding-card{ order: 2; }
+    .book-list{ grid-template-columns: repeat(2, 1fr); justify-items:center; }
+    .high-card { flex: 0 0 280px; height:360px; }
+  }
+  @media (max-width:640px){
+    .nav-center{ display:none; }
+    .hamburger{ display:block; }
+    .book-list{ grid-template-columns: 1fr; }
+    .book-card img{ width:140px; height:180px; }
+    .high-card { flex: 0 0 240px; height:300px; }
+    .journal .right{ width:140px; min-width:120px; }
+    .hero-photo img{ height:200px; }
+  }
+
+
+
+
+
+
+  
+/* SCHOOL CARDS STYLING */
+/* SCHOOL CARDS STYLING */
+/* SECTION STYLING */
+.schools-section {
+  background-color: #0b0b0b;
+  padding: 80px 40px;  /* Added wider padding for side margin */
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 1200px;   /* Limit width */
+  margin: 0 auto;      /* Center section with margin on sides */
+}
+
+.section-title {
+  text-align: center;
+  color: #ffd700;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 50px;
+}
+
+/* GRID */
+.schools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* CARD */
+.school-card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.school-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+}
+
+.school-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.school-card h3 {
+  color: #ffd700;
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.school-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.school-card li {
+  margin-bottom: 15px;
+}
+
+.school-card a {
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.school-card a:hover {
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+.authors {
+  display: block;
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 3px;
+}
+
+/* READ MORE BUTTON */
+.read-more-btn {
+  margin-top: auto;              /* Push button to bottom of card */
+  text-align: center;
+}
+
+.read-more-btn a {
+  display: inline-block;
+  background-color: #ffd700;    /* gold background */
+  color: #000;                  /* black text */
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.read-more-btn a:hover {
+  background-color: #e6c200;    /* darker gold on hover */
+  color: #000;
+}
+
+
+
+/* ---------------------------
+   book preview + funding
+   --------------------------- */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0d0d0d;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+/* WRAPPER */
+.schools-wrap {
+  max-width: 2000px; /* wider so 4 cards fit neatly */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #0d0d0d;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* GRID – FORCE 4 CARDS PER LINE */
+.schools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+@media (max-width: 1200px) {
+  .schools-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on smaller screens */
+  }
+}
+
+@media (max-width: 700px) {
+  .schools-grid {
+    grid-template-columns: 1fr; /* 1 per row on mobile */
+  }
+}
+
+/* SCHOOL CARD */
+.school-card {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.school-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.school-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* HEADINGS */
+.school-card h3 {
+  color: #d4af37;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* LISTS */
+.school-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.school-card ul li {
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-size: 1em;
+  color: #ffffff;
+}
+
+/* LINKS */
+.school-card ul li a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.school-card ul li a:hover {
+  text-decoration: underline;
+  color: #d4af37;
+}
+
+/* AUTHORS */
+.authors {
+  font-size: 0.85em;
+  color: #cccccc;
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* READ MORE BUTTON */
+/* READ MORE BUTTON */
+.read-more {
+  display: block;
+  margin-top: auto;
+  padding: 12px 20px;
+  background-color: #ffd700 !important; /* golden background */
+  color: #000000 !important;            /* force black text */
+  text-decoration: none !important;     /* no underline */
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s ease; /* smooth hover effect */
+}
+
+.read-more:hover {
+  background-color: #ffcc00 !important;       /* slightly brighter gold */
+  transform: translateY(-3px) scale(1.05);   /* lift & scale */
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);    /* stronger shadow */
+  color: #000000 !important;                  /* keep text black */
+  cursor: pointer;
+}
+
+
+
+
+
+/* Anouncement*/
+
+/* Announcements Section */
+section {
+    padding: 4rem 2rem;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff9f43; /* keep your color */
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+section h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: #ff9f43;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+/* Grid layout */
+section .grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Card Style */
+section .card {
+    position: relative;
+    background-color: #1f2937; /* keep your dark card */
+    border-radius: 1rem;
+    padding: 1.8rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Card hover interaction */
+section .card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Floating accent elements for cute effect */
+section .card::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 159, 67, 0.15); /* light accent */
+    border-radius: 50%;
+    top: -20px;
+    right: -20px;
+    transition: transform 0.4s ease;
+}
+
+section .card:hover::before {
+    transform: scale(1.5);
+}
+
+/* Title style */
+section .card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ff9f43; /* keep your title color */
+    margin-bottom: 0.5rem;
+    z-index: 1;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+section .card:hover h3 {
+    color: #ffd600; /* subtle highlight on hover */
+
+}
+
+/* Date */
+section .card p:first-of-type {
+    font-size: 0.85rem;
+    color: #9ca3af; /* muted gray */
+    margin-bottom: 1rem;
+     z-index: 1;
+    position: relative;
+
+}
+
+/* Message */
+section .card p:last-of-type {
+    font-size: 1rem;
+    color: #d1d5db;
+    line-height: 1.6;
+     z-index: 1;
+     position: relative;
+}
+
+/* Interactive "read more" idea (optional) */
+section .card p:last-of-type {
+    max-height: 80px;
+    overflow: hidden;
+    position: relative;
+     padding-right: 2rem; /* space for the ellipsis */
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     transition: max-height 0.4s ease;
+
+}
+
+section .card p:last-of-type::after {
+    content: "...";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-left: 1rem;
+    background: linear-gradient(to right, transparent, #1f2937);
+    color: #ff9f43;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    section {
+        padding: 3rem 1rem;
+    }
+}
+
+
+
+/* Funding Opportunities Section */
+
+
+
+/* Wrapper to center the whole section */
+.opportunities-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh; /* takes full screen height */
+  padding: 20px;     /* spacing from edges */
+  background: #000000; /* light background for contrast */
+}
+
+/* Card container */
+.opportunities-card {
+  background: #000000;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 700px;   /* margin both sides */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Heading */
+.opportunities-card h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color:#d4af37;
+}
+
+/* Paragraph */
+.opportunities-card p {
+  font-size: 1.1rem;
+  color: #fbebebff;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* Button */
+.opportunities-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.opportunities-btn:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(180, 83, 9, 0.5);
+}
+
+
+
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+
+
+ <?php include __DIR__ . '/../includes/header.php'; ?>
+
+
+<!-- HERO (left content + small photo on right) -->
+<!-- HERO BACKGROUND SECTION -->
+<section class="hero-bg">
+  <div class="hero-content">
+    <h1>Welcome to CRIM</h1>
+    <p>Center For Research and Innovation Management .</p>
+  </div>
+</section>
+
+
+
+
+<!-- HIGHLIGHTS & EVENT POSTERS (modern horizontal snap carousel, AUTO-MOVE) -->
+<section class="highlights-wrap wrap" aria-label="Highlights and events">
+  <h2>Highlights & Events</h2>
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div class="high-carousel" id="highCarousel" tabindex="0" aria-label="Highlights carousel">
+      <?php
+        if (!empty($hlImages)):
+          foreach ($hlImages as $idx => $h) {
+            $hurl = imgUrl($h);
+            $title = pathinfo($h, PATHINFO_FILENAME);
+            $titleText = htmlspecialchars(str_replace(['_','-'], ' ', $title));
+            echo '<div class="high-card" data-src="' . htmlspecialchars($hurl) . '" tabindex="0" role="button" aria-pressed="false">';
+            echo '  <img src="' . htmlspecialchars($hurl) . '" alt="' . $titleText . '">';
+            echo '  <div class="high-overlay"><div class="high-title">' . $titleText . '</div><div class="high-sub">Click to enlarge</div></div>';
+            echo '</div>';
+          }
+        else:
+          for ($i=1;$i<=4;$i++){
+            echo '<div class="high-card" data-src="https://via.placeholder.com/900x1200?text=Poster+' . $i . '">';
+            echo '  <img src="https://via.placeholder.com/900x1200?text=Poster+' . $i . '" alt="Poster ' . $i . '">';
+            echo '  <div class="high-overlay"><div class="high-title">Poster ' . $i . '</div><div class="high-sub">Click to enlarge</div></div>';
+            echo '</div>';
+          }
+        endif;
+      ?>
+    </div>
+
+    <div class="high-controls" style="align-self:center;">
+      <button id="highPrev" aria-label="Scroll left">◀</button>
+      <button id="highNext" aria-label="Scroll right">▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX for highlights -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+  <div class="inner">
+    <img id="lightImage" src="" alt="Expanded poster">
+    <div class="light-meta">
+      <div id="lightTitle" style="color:var(--gold);font-weight:800"></div>
+      <div><button id="lightClose" style="background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer">CLOSE ✕</button></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<?php
+require_once __DIR__ . '/../config/db.php';
+
+// Fetch books grouped by department
+$departments = ["SCI", "SBSS", "SEHS", "CFGS"];
+?>
+
+
+
+<section class="schools-wrap" aria-label="School Research Publications" style="padding:60px 20px; background-color:#0d0d0d;">
+  <h2 style="text-align:center; color:#d4af37; font-size:32px; margin-bottom:40px;">Research Publications by Schools</h2>
+
+  <div class="schools-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px;">
+    <?php foreach ($departments as $dept): ?>
+      <div class="school-card">
+        <img src="../images/<?= strtolower($dept) ?>.jpg" alt="<?= $dept ?> School">
+        <h3><?= $dept ?> - Research and Publications</h3>
+        <ul>
+          <?php
+          $result = $conn->query("SELECT * FROM publications WHERE department='$dept' ORDER BY created_at DESC LIMIT 3");
+          if ($result->num_rows > 0):
+            while ($row = $result->fetch_assoc()):
+          ?>
+              <li>
+                <a href="<?= htmlspecialchars($row['link']) ?>" target="_blank"><?= htmlspecialchars($row['title']) ?></a>
+                <div class="authors">Authors: <?= htmlspecialchars($row['author']) ?></div>
+              </li>
+          <?php endwhile; else: ?>
+              <li><em>No publications yet.</em></li>
+          <?php endif; ?>
+        </ul>
+        <a href="publication.php?dept=<?= $dept ?>" class="read-more">Read More</a>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<!--   anuncements section-->
+
+<?php
+require_once __DIR__ . '/../config/db.php';
+$announcements = $conn->query("SELECT * FROM announcements ORDER BY created_at DESC LIMIT 5");
+?>
+
+   <!-- Announcements -->
+    <section>
+        <h2 class="text-3xl font-bold mb-6 text-yellow-400 text-center">📢 Announcements</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <?php if ($announcements->num_rows > 0): ?>
+                <?php while ($a = $announcements->fetch_assoc()): ?>
+                    <div class="card rounded-lg shadow p-5">
+                        <h3 class="text-xl font-semibold text-yellow-400 mb-2"><?= htmlspecialchars($a['title']) ?></h3>
+                        <p class="text-sm text-gray-400 mb-2"><?= $a['created_at'] ?></p>
+                        <p class="text-gray-300"><?= htmlspecialchars($a['message']) ?></p>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-gray-400 text-center">No announcements available.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+
+
+
+
+<!-- Funding Opportunities -->
+     
+
+<div class="opportunities-wrapper">
+  <div class="opportunities-card">
+    <h3>Funding Opportunities</h3>
+    <p>Explore various grants, fellowships, and calls for proposals to support your research endeavors.</p>
+    <a href="https://docs.google.com/spreadsheets/d/1a1M_RyA240DObLJX_Yiqx6x-SLa7ZPvO/edit?gid=197682386#gid=197682386"
+       target="_blank"
+       class="opportunities-btn">
+      <span class="icon">🎉</span>
+      <span>View Funding Opportunities</span>
+      <span class="icon">💡</span>
+    </a>
+  </div>
+</div>
+
+   
+
+
+
+
+
+<!-- PARTNERS -->
+<section class="partners-wrap" aria-label="Partners">
+  <h2 style="text-align:center; color:var(--gold); margin-bottom:6px">Partners & Collaborators</h2>
+  <div class="partners-inner wrap">
+    <div class="partner-track" id="partnerTrack">
+      <?php
+      // render partners twice to allow seamless loop
+      $partnersToShow = array_slice($ptnImages,0,10);
+      $dup = array_merge($partnersToShow, $partnersToShow);
+      if (empty($dup)) {
+        for ($i=1;$i<=6;$i++){
+          echo '<img src="https://via.placeholder.com/180x80?text=Partner+'. $i .'" alt="partner">';
+        }
+      } else {
+        foreach ($dup as $p) {
+          echo '<img src="' . htmlspecialchars(imgUrl($p)) . '" alt="' . htmlspecialchars(pathinfo($p, PATHINFO_FILENAME)) . '">';
+        }
+      }
+      ?>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="journal wrap" aria-label="Albukhary Social Business Journal">
+  <div class="left">
+    <h3>Albukhary Social Business Journal</h3>
+    <p>ASBJ showcases research on social business, inclusive innovation and sustainable impact. Read editorials, research articles and practice notes from researchers worldwide.</p>
+    <a class="btn-primary" href="https://asbj.aiu.edu.my/main/about-us" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px">Read Journal</a>
+  </div>
+  <div class="right">
+    <?php if ($asbjImage): ?>
+      <img src="<?php echo htmlspecialchars(imgUrl($asbjImage)); ?>" alt="ASBJ journal cover">
+    <?php else: ?>
+      <img src="../images/journal.jpg" alt="ASBJ preview">
+    <?php endif; ?>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
+
+
+<!-- --------------------------
+     Javascript: interactions
+     -------------------------- -->
+<script>
+(function(){
+  // helpers
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+
+  // Mobile menu toggle
+  const hambtn = qs('#hambtn');
+  const mobileMenu = qs('#mobileMenu');
+  if (hambtn) {
+    hambtn.addEventListener('click', () => {
+      const open = mobileMenu.style.display === 'block';
+      mobileMenu.style.display = open ? 'none' : 'block';
+      hambtn.setAttribute('aria-expanded', (!open).toString());
+    });
+  }
+
+  // Submenu accessibility
+  qsa('.nav-item').forEach(item=>{
+    item.addEventListener('focusin', ()=> {
+      const sub = item.querySelector('.submenu');
+      if(sub) sub.style.display = 'block';
+    });
+    item.addEventListener('focusout', ()=> {
+      const sub = item.querySelector('.submenu');
+      if(sub) sub.style.display = 'none';
+    });
+  });
+
+  /* ---------------------------
+     HIGHLIGHT CAROUSEL: scroll-snap + arrow controls + lightbox + AUTO-SCROLL
+     --------------------------- */
+  const carousel = qs('#highCarousel');
+  const prevBtn = qs('#highPrev');
+  const nextBtn = qs('#highNext');
+  const cardSelector = '.high-card';
+  let autoScrollTimer = null;
+
+  // Scroll amount: try one card width (uses gap if present)
+  function scrollByCard(direction=1){
+    if(!carousel) return;
+    const card = carousel.querySelector(cardSelector);
+    if(!card) return;
+    // compute gap (fallback to 16)
+    const style = getComputedStyle(card);
+    let gap = 16;
+    // if parent uses gap, computed margin is not directly available; approximate using parent's gap if available
+    const parentStyle = getComputedStyle(carousel);
+    const parentGap = parentStyle.gap || parentStyle.columnGap || null;
+    if (parentGap) {
+      gap = parseInt(parentGap) || gap;
+    }
+    const cardW = Math.round(card.getBoundingClientRect().width + gap);
+    carousel.scrollBy({ left: direction * cardW, behavior: 'smooth' });
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', ()=> { stopAutoScroll(); scrollByCard(-1); restartAutoScroll(); });
+  if (nextBtn) nextBtn.addEventListener('click', ()=> { stopAutoScroll(); scrollByCard(1); restartAutoScroll(); });
+
+  // keyboard left/right
+  if (carousel) {
+    carousel.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowLeft') { e.preventDefault(); stopAutoScroll(); scrollByCard(-1); restartAutoScroll(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); stopAutoScroll(); scrollByCard(1); restartAutoScroll(); }
+    });
+  }
+
+  // auto-scroll control
+  function startAutoScroll() {
+    if (!carousel) return;
+    if (autoScrollTimer) return;
+    autoScrollTimer = setInterval(()=> {
+      // if at end, reset to start
+      if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 10) {
+        carousel.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollByCard(1);
+      }
+    }, 3800);
+  }
+  function stopAutoScroll() {
+    if (autoScrollTimer) {
+      clearInterval(autoScrollTimer);
+      autoScrollTimer = null;
+    }
+  }
+  function restartAutoScroll() { stopAutoScroll(); startAutoScroll(); }
+
+  // pause on hover/focus
+  if (carousel) {
+    carousel.addEventListener('mouseenter', stopAutoScroll);
+    carousel.addEventListener('mouseleave', startAutoScroll);
+    carousel.addEventListener('focusin', stopAutoScroll);
+    carousel.addEventListener('focusout', startAutoScroll);
+    // start after small delay so layout is ready
+    setTimeout(() => startAutoScroll(), 600);
+  }
+
+  // Lightbox
+  const lightbox = qs('#lightbox');
+  const lightImage = qs('#lightImage');
+  const lightTitle = qs('#lightTitle');
+  const lightClose = qs('#lightClose');
+
+  function openLight(src, title) {
+    lightImage.src = src;
+    lightTitle.textContent = title || '';
+    lightbox.style.display = 'flex';
+    lightbox.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLight() {
+    lightbox.style.display = 'none';
+    lightbox.setAttribute('aria-hidden','true');
+    lightImage.src = '';
+    lightTitle.textContent = '';
+    document.body.style.overflow = '';
+  }
+
+  // click handlers: open lightbox when a poster clicked
+  qsa('.high-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const src = card.dataset.src || (card.querySelector('img') ? card.querySelector('img').src : '');
+      const title = card.querySelector('.high-title') ? card.querySelector('.high-title').textContent : '';
+      openLight(src, title);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+  });
+
+  if (lightClose) lightClose.addEventListener('click', closeLight);
+  if (lightbox) lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLight(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLight(); });
+
+  // Partner marquee pause handled via CSS hover
+
+  // small accessibility for read-more: Enter to go
+  const readMore = qs('.read-more');
+  if(readMore){
+    readMore.addEventListener('keyup', (e)=>{
+      if(e.key === 'Enter') window.location = readMore.getAttribute('href');
+    });
+  }
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<?php
+session_start();
+require_once __DIR__ . '/../config/db.php';
+
+// Guard: only admins
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+    header("Location: ../auth/login.php");
+    exit;
+}
+
+$adminName = $_SESSION['user']['fullname'];
+
+// Example stats (you can fetch real data from DB)
+$totalSubmissions = $conn->query("SELECT COUNT(*) as cnt FROM submissions")->fetch_assoc()['cnt'];
+$pendingSubmissions = $conn->query("SELECT COUNT(*) as cnt FROM submissions WHERE status='pending'")->fetch_assoc()['cnt'];
+$approvedSubmissions = $conn->query("SELECT COUNT(*) as cnt FROM submissions WHERE status='approved'")->fetch_assoc()['cnt'];
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen p-6">
+
+<!-- Centered Welcome Banner -->
+<header class="flex justify-center mb-10">
+    <div class="bg-yellow-400/20 backdrop-blur-md px-12 py-6 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300">
+        <h1 class="text-4xl font-extrabold text-yellow-300 text-center">Welcome, <?= htmlspecialchars($adminName) ?> 👋</h1>
+        <p class="text-gray-200 text-center mt-2">Admin Dashboard</p>
+    </div>
+</header>
+
+<!-- Stats Cards -->
+<section class="max-w-6xl mx-auto grid gap-6 md:grid-cols-3 mb-12">
+    <div class="bg-yellow-400/20 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center">
+        <h2 class="text-2xl font-bold text-yellow-300 mb-2">Total Submissions</h2>
+        <p class="text-3xl font-extrabold"><?= $totalSubmissions ?></p>
+    </div>
+    <div class="bg-yellow-400/20 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center">
+        <h2 class="text-2xl font-bold text-yellow-300 mb-2">Pending</h2>
+        <p class="text-3xl font-extrabold"><?= $pendingSubmissions ?></p>
+    </div>
+    <div class="bg-yellow-400/20 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center">
+        <h2 class="text-2xl font-bold text-yellow-300 mb-2">Approved</h2>
+        <p class="text-3xl font-extrabold"><?= $approvedSubmissions ?></p>
+    </div>
+</section>
+
+<!-- Navigation Buttons -->
+<section class="max-w-6xl mx-auto grid gap-6 md:grid-cols-2 mb-12">
+    <a href="manage_submissions.php" class="bg-yellow-400/20 hover:bg-yellow-400/40 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center font-bold text-xl text-yellow-300 hover:text-gray-900">
+        Manage Submissions
+    </a>
+    <a href="manage_announcements.php" class="bg-yellow-400/20 hover:bg-yellow-400/40 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-center font-bold text-xl text-yellow-300 hover:text-gray-900">
+       Make Anouncements
+    </a>
+</section>
+
+<!-- Recent Submissions Table -->
+<section class="max-w-6xl mx-auto mb-12">
+    <h2 class="text-3xl font-bold text-yellow-300 mb-6 text-center">Recent Submissions</h2>
+    <div class="overflow-x-auto bg-yellow-400/10 rounded-2xl shadow-lg p-4">
+        <table class="min-w-full table-auto border-collapse border border-gray-600">
+            <thead class="bg-yellow-400/20 text-gray-900">
+                <tr>
+                    <th class="px-4 py-2 border">ID</th>
+                    <th class="px-4 py-2 border">Leader Name</th>
+                    <th class="px-4 py-2 border">Submitted By</th>
+                    <th class="px-4 py-2 border">Status</th>
+                    <th class="px-4 py-2 border">Date</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-100">
+                <?php
+                $submissions = $conn->query("SELECT s.id, s.leaderName, s.status, s.created_at, u.fullname AS submitter_name FROM submissions s JOIN users u ON s.user_id=u.id ORDER BY s.created_at DESC LIMIT 5");
+                if ($submissions->num_rows > 0):
+                    while ($row = $submissions->fetch_assoc()):
+                ?>
+                    <tr class="hover:bg-yellow-400/10 transition">
+                        <td class="px-4 py-2 border"><?= $row['id'] ?></td>
+                        <td class="px-4 py-2 border"><?= htmlspecialchars($row['leaderName']) ?></td>
+                        <td class="px-4 py-2 border"><?= htmlspecialchars($row['submitter_name']) ?></td>
+                        <td class="px-4 py-2 border">
+                            <?php if ($row['status']==='approved'): ?>
+                                <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded-full">Approved</span>
+                            <?php elseif ($row['status']==='pending'): ?>
+                                <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full">Pending</span>
+                            <?php else: ?>
+                                <span class="bg-red-500/20 text-red-300 px-2 py-1 rounded-full">Rejected</span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="px-4 py-2 border"><?= $row['created_at'] ?></td>
+                    </tr>
+                <?php
+                    endwhile;
+                else:
+                ?>
+                    <tr>
+                        <td colspan="5" class="px-4 py-4 text-center text-gray-400">No submissions yet.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+</body>
+</html>
